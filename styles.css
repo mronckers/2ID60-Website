@@ -3,5 +3,9 @@ h1 {
 }
 
 p {
+  color: green;
+}
+
+.navbar {
   background-color: green;
 }
