@@ -85,5 +85,33 @@ h1.heading {
   text-decoration: none !important;
   padding:10px;
   font-weight:600;
-  text-transform: uppercase
+  text-transform: uppercase;
+}
+
+.card-header {
+  color: white !important;
+  font-weight: 700;
+  font-size: 1.65em;
+  background-color: #50a1af !important;
+  opacity: 0.9;
+}
+
+.fas {
+  color: #50a1af;
+}
+
+.fas:hover {
+  color: grey;
+}
+
+.fa-check {
+  color: #4ab279;
+}
+
+.card-header .fas  {
+  color: white;
+}
+
+.card-header .fas:hover{
+  color: grey;
 }

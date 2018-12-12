@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <!-- Material Design for Bootstrap fonts and icons -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <!-- Optional Bootstrap theme -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
 
     <title>To-do-list</title>
   </head>
@@ -61,38 +61,38 @@
                   <div class="row">
                       <div class="col-xs-12 col-sm-4">
                           <div class="card">
-                              <div class="card-content">
-                                  <h4 class="card-title">
-                                      Household
-                                  </h4>
-                                  <p class="">
-                                      <ul>
-                                        <li>Stofzuigen</li>
-                                        <li>Wc</li>
-                                      </ul>
-                                  </p>
+                              <div class="card-header">
+                                Household
+                                <div class="closed">
+                                  <a href=""><span class="float-right fas fa-plus"></span></a>
+                                </div>
+                                <div class="open">
+                                  <a href=""><span class="float-right fas fa-minus"></span></a>
+                                  <a href=""><span class="float-right fas fa-trash-alt"></span></a>
+                                </div>
+                              </div>
+                              <div class="card-body text-left">
+                                <ul class="list-group list-group-flush" id='newList'>
+                                  <li class="list-group-item">
+                                    Stofzuigen
+                                    <a href=""><span class="float-right fas fa-check"></span></a>
+                                  </li>
+                                  <li class="list-group-item">wc
+                                    <a href=""><span class="float-right fas fa-check"></span></a>
+                                  </li>
+                                  <li class="list-group-item">wc
+                                    <a href=""><span class="float-right fas fa-check"></span></a>
+                                  </li>
+                                </ul>
                               </div>
                               <div class="card-add-more">
-                                  <button class="btn btn-link btn-block">
-                                      Add to-do
-                                  </button>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-xs-12 col-sm-4">
-                          <div class="card">
-                              <div class="card-content">
-                                  <h4 class="card-title">
-                                      Household
-                                  </h4>
-                                  <p class="">
-                                      <ul>
-                                        <li>Stofzuigen</li>
-                                        <li>Wc</li>
-                                      </ul>
-                                  </p>
-                              </div>
-                              <div class="card-add-more">
+                                <form class="form-group" id="addToDo">
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
+                                        <a href=""><span class="float-right fas fa-plus" id="trash-add"></span></a>
+                                        <a href=""><span class="float-right fas fa-trash-alt"></span></a>
+                                    </div>
+                                </form>
                                   <button class="btn btn-link btn-block">
                                       Add to-do
                                   </button>
@@ -110,6 +110,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
     <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
   </body>
 </html>
