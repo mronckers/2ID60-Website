@@ -105,7 +105,11 @@ h1.heading {
 }
 
 .fa-check {
-  color: #4ab279;
+  color: grey;
+}
+
+.fa-check:hover{
+  color:#4ab279;
 }
 
 .card-header .fas  {
