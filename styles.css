@@ -66,8 +66,8 @@ h1.heading {
   box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.card-content {
-  padding:15px;
+.card-body {
+  padding:0 !important;
   text-align:left;
 }
 

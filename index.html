@@ -63,33 +63,33 @@
                           <div class="card">
                               <div class="card-header">
                                 Household
-                                <a href=""><span class="float-left fas fa-trash-alt"></span></a>
+                                <a href="" id="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
                                 <a href="" id="openBody"><span class="float-right fas fa-plus"></span></a>
                                 <a href="" id="closeBody"><span class="float-right fas fa-minus" ></span></a>
                               </div>
-                              <div class="card-body text-left">
+                              <div class="card-body text-left" id="card-body">
                                 <ul class="list-group list-group-flush" id='newList'>
-                                  <li class="list-group-item">
+                                  <li class="list-group-item" id='already-inthere'>
                                     Stofzuigen
-                                    <a href=""><span class="float-right fas fa-check"></span></a>
+                                    <a href=""><span class="float-right fas fa-check" id="already-inthere"></span></a>
                                   </li>
-                                  <li class="list-group-item">wc
-                                    <a href=""><span class="float-right fas fa-check"></span></a>
+                                  <li class="list-group-item" id='already-inthere'>wc
+                                    <a href=""><span class="float-right fas fa-check" id="already-inthere"></span></a>
                                   </li>
-                                  <li class="list-group-item">wc
-                                    <a href=""><span class="float-right fas fa-check"></span></a>
+                                  <li class="list-group-item" id='already-inthere'>wc
+                                    <a href=""><span class="float-right fas fa-check" id="already-inthere"></span></a>
                                   </li>
                                 </ul>
                               </div>
                               <div class="card-add-more">
-                                <form class="form-group" id="addToDo">
+                                <form class="form-group" id="addToDoForm">
                                     <div class="input-group">
                                         <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
-                                        <a href=""><span class="float-right fas fa-plus" id="addItem"></span></a>
-                                        <a href=""><span class="float-right fas fa-trash-alt" id="cancelAddItem"></span></a>
+                                        <a href="" id="addItem"><span class="float-right fas fa-plus"></span></a>
+                                        <a href="" id="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>
                                     </div>
                                 </form>
-                                  <button class="btn btn-link btn-block">
+                                  <button class="btn btn-link btn-block" id="addToDo">
                                       Add to-do
                                   </button>
                               </div>
