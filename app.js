@@ -11,8 +11,9 @@ $(document).on('ready', function() {
     if (todo) {
       newtodo = new ToDo(todo, list);
 
+      let newID = newtodo.list.replace(/\s+/g, '') + newtodo.todo.replace(/\s+/g, '');
       toDoLists.push(newtodo);
-      let addition = '<li class="list-group-item">' + newtodo.todo + '<a href=""><span class="float-right fas fa-check" id="new"></span></a></li>';
+      let addition = '<li class="list-group-item" id="item'+ newID +'">' + newtodo.todo + '<a href="" class="check-mark" id="'+ newID +'"><span class="float-right fas fa-check"></span></a></li>';
       console.log(addition);
       $('#newList').append(addition);
     }
@@ -28,30 +29,37 @@ $(document).on('ready', function() {
   $('#card-body').hide();
   $('#addToDoForm').hide();
 
+  $(document).on('click', '.removeCard', function(e) {
+    e.preventDefault();
+    let id = $(this).attr('id');
+    let newid = '#card'+id;
+    $(newid).remove();
+  });
+
+
   $('#openBody').on('click', function(e) {
     e.preventDefault();
     $('#openBody').toggle();
     $('#closeBody').toggle();
     $('#card-body').toggle();
-  })
+  });
 
   $('#closeBody').on('click', function(e) {
     e.preventDefault();
     $('#openBody').toggle();
     $('#closeBody').toggle();
     $('#card-body').toggle();
-  })
+  });
 
-  $('.fa-check').on('click', function(e) {
+  $(document).on('click', '.check-mark', function(e) {
     e.preventDefault();
     console.log('here');
     let id = $(this).attr('id');
     console.log(id);
-    let newid = '#'+id;
+    let newid = '#item'+id;
     console.log(newid);
     $(newid).remove();
-
-  })
+  });
 
   //handles mouse click for adding items to the new list
   $('#addItem').on('click', function (e) {
@@ -83,9 +91,11 @@ $(document).on('ready', function() {
 
   $('#addToDo').on('click', function(e) {
     e.preventDefault();
+    $('#newItemInput').val('');
     $('#addToDoForm').toggle();
     $('#addToDo').toggle();
-  })
+
+  });
 
 
 
