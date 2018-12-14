@@ -11,89 +11,83 @@ $(document).on('ready', function() {
     if (todo) {
       newtodo = new ToDo(todo, list);
 
-      let newID = newtodo.list.replace(/\s+/g, '') + newtodo.todo.replace(/\s+/g, '');
       toDoLists.push(newtodo);
+
+      let listGood = newtodo.list.replace(/\s+/g, '').replace("'","");
+      let todoGood = newtodo.todo.replace(/\s+/g, '').replace("'", "");
+      let newID = listGood+todoGood;
+
       let addition = '<li class="list-group-item" id="item'+ newID +'">' + newtodo.todo + '<a href="" class="check-mark" id="'+ newID +'"><span class="float-right fas fa-check"></span></a></li>';
-      console.log(addition);
       $('#newList').append(addition);
     }
 
     $('#newItemInput').val('');
   }
 
-  let deleteToDo = function(todo) {
-
-  }
-
-  $('#closeBody').hide();
-  $('#card-body').hide();
-  $('#addToDoForm').hide();
+  $('.closeBody').hide();
+  $('.card-body').hide();
+  $('.form-group').hide();
 
   $(document).on('click', '.removeCard', function(e) {
     e.preventDefault();
-    let id = $(this).attr('id');
-    let newid = '#card'+id;
-    $(newid).remove();
+    $(this).parents('.card').remove();
   });
 
 
-  $('#openBody').on('click', function(e) {
+  $(document).on('click', '.openBody', function(e) {
     e.preventDefault();
-    $('#openBody').toggle();
-    $('#closeBody').toggle();
-    $('#card-body').toggle();
+    $(this).toggle();
+    $(this).siblings('.closeBody').toggle();
+    $(this).parents('.card').children('.card-body').toggle();
   });
 
-  $('#closeBody').on('click', function(e) {
+  $(document).on('click', '.closeBody', function(e) {
     e.preventDefault();
-    $('#openBody').toggle();
-    $('#closeBody').toggle();
-    $('#card-body').toggle();
+    $(this).toggle();
+    $(this).siblings('.openBody').toggle();
+    $(this).parents('.card').children('.card-body').toggle();
   });
 
   $(document).on('click', '.check-mark', function(e) {
     e.preventDefault();
-    console.log('here');
-    let id = $(this).attr('id');
-    console.log(id);
-    let newid = '#item'+id;
-    console.log(newid);
-    $(newid).remove();
+    $(this).parents('.list-group-item').remove();
   });
 
   //handles mouse click for adding items to the new list
-  $('#addItem').on('click', function (e) {
+  $(document).on('click', '.addItem', function (e) {
       e.preventDefault();
-      let todo = $('#newItemInput').val().trim();
-      addToDo(todo, 'Household');
-      console.log('Add');
-      $('#addToDoForm').toggle();
-      $('#addToDo').toggle();
+      let todo = $(this).siblings('.form-control').val().trim();
+      let list = $(this).parents('.card').attr('id');
+      addToDo(todo, list);
+      $(this).parents('.form-group').toggle();
+      $(this).parents('.form-group').siblings('.addToDo').toggle();
   });
 
   //handles pressing enter for adding items to the new list
-  $('#addToDoForm').on('keypress', function(e) {
+  $(document).on('keypress','.form-group', function(e) {
     if (e.which === 13) {
+      console.log($(this).children('#newItemInput'));
         let todo = $('#newItemInput').val().trim();
+        console.log(todo);
         addToDo(todo, 'Household');
-        $('#addToDoForm').toggle();
-        $('#addToDo').toggle();
+        $(this).toggle();
+        $(this).siblings('.addToDo').toggle();
         e.preventDefault();
     }
 
   });
 
-  $('#cancelAddItem').on('click', function(e) {
+  $(document).on('click', '.cancelAddItem', function(e) {
     e.preventDefault();
-    $('#addToDoForm').toggle();
-    $('#addToDo').toggle();
+    $(this).parents('.form-group').toggle();
+    $(this).parents('.form-group').siblings('.addToDo').toggle();
   });
 
-  $('#addToDo').on('click', function(e) {
+  $(document).on('click', '.addToDo', function(e) {
     e.preventDefault();
     $('#newItemInput').val('');
-    $('#addToDoForm').toggle();
-    $('#addToDo').toggle();
+    $(this).siblings('.form-group').toggle();
+    $(this).toggle();
 
   });
 
