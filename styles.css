@@ -66,15 +66,17 @@ h1.heading {
   box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
+.card-header {
+  color: white !important;
+  font-weight: 700;
+  font-size: 20px;
+  background-color: #50a1af !important;
+  opacity: 0.9;
+}
+
 .card-body {
   padding:0 !important;
   text-align:left;
-}
-
-.card-title {
-  margin-top:0px;
-  font-weight: 700;
-  font-size: 1.65em;
 }
 
 .card-add-more {
@@ -86,14 +88,6 @@ h1.heading {
   padding:10px;
   font-weight:600;
   text-transform: uppercase;
-}
-
-.card-header {
-  color: white !important;
-  font-weight: 700;
-  font-size: 1.65em;
-  background-color: #50a1af !important;
-  opacity: 0.9;
 }
 
 .fas {
