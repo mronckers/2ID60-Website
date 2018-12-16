@@ -1,6 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
 .navbar-light {
   background-color: red;
+}
+
+#inputFormList {
+  width: 100%;
+  padding: 0px 20px 20px 20px;
 }
 
 html,
@@ -85,13 +91,19 @@ h1.heading {
 
 .card-add-more a {
   text-decoration: none !important;
-  padding:10px;
+  padding: 5px;
   font-weight:600;
   text-transform: uppercase;
 }
 
+.card-add-more button {
+  color:#50a1af !important;
+  background-color: white !important;
+}
+
 .fas {
   color: #50a1af;
+  padding: 5px;
 }
 
 .fas:hover {

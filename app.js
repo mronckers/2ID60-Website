@@ -53,7 +53,7 @@ $(document).on('ready', function() {
                           '<a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>'+
                       '</div>'+
                   '</form>'+
-                    '<button class="btn btn-link btn-block addToDo">'+
+                    '<button class="btn btn-block addToDo">'+
                         'Add to-do'+
                     '</button>'+
                 '</div>'+
@@ -61,23 +61,56 @@ $(document).on('ready', function() {
         '</div>'
         );
 
-      $('#cardscontainer').append(cardHTML);
+      $('.row').append(cardHTML);
+      $('.closeBody').hide();
+      $('.card-body').hide();
+      $('.form-group').hide();
     }
   }
+
+  if ($('.row').is(':empty')) {
+    console.log("Empty");
+    $('.row').append("Empty");
+  };
+
 
   $('.closeBody').hide();
   $('.card-body').hide();
   $('.form-group').hide();
+  $('#inputFormList').hide();
+
+  $(document).on('click', '#openFormList', function(e) {
+    e.preventDefault();
+    $('#inputFormList').slideToggle('fast');
+  });
 
   $(document).on('click', '#addList', function(e) {
     e.preventDefault();
-    addList('New');
-    //$('#cardscontainer').append('<div class="col-xs-12 col-sm-4">"List"</div>');
+    let listName = $('#inputListName').val().trim();
+    addList(listName);
+    $('#inputFormList').slideToggle('fast');
+    $(this).val('');
   });
+
+  $(document).on('keypress','#inputListName', function(e) {
+    if (e.which === 13) {
+      e.preventDefault();
+      let listName = $('#inputListName').val().trim();
+      addList(listName);
+      $('#inputFormList').slideToggle('fast');
+      $(this).val('');
+    }
+  });
+
+  $(document).on('click', '#cancelAddList', function(e) {
+    e.preventDefault();
+    $('#inputFormList').slideToggle('fast');
+    $('#inputListName').val('');
+  })
 
   $(document).on('click', '.removeCard', function(e) {
     e.preventDefault();
-    $(this).parents('.card').remove();
+    $(this).parents('.col-xs-12').remove();
   });
 
 

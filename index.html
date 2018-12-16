@@ -19,11 +19,20 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">User<span class="fas fa-user"></span></a>
         </li>
+      </ul>
+      <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Add list<span class="fas fa-plus"></span></a>
+          <a class="nav-link" href="#" id="openFormList">Add list<span class="fas fa-plus"></span></a>
         </li>
       </ul>
     </nav>
+
+    <div class="float-right bg-light" id="inputFormList">
+      <a href="" class="float-right" id="cancelAddList"><span class="fas fa-trash-alt"></span></a>
+      <a href="" class="float-right" id="addList"><span class="fas fa-plus"></span></a>
+      <input class="float-right" type="text" placeholder="Name..." id="inputListName"></input>
+    </div>
+
 
     <!-- Main content of the to-do-list website -->
     <section class="wrapper">
@@ -35,80 +44,7 @@
           </div>
           <div class="content">
               <div class="container">
-                  <div class="row" id="#cardscontainer">
-
-                    	<!-- Template code for the cards of lists-->
-                      <div class="col-xs-12 col-sm-4">
-                          <div class="card" id="Household">
-                              <div class="card-header">
-                                Household
-                                <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
-                                <a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>
-                                <a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>
-                              </div>
-                              <div class="card-body text-left" id="card-body">
-                                <ul class="list-group list-group-flush" id='newList'>
-                                  <li class="list-group-item" id="item1">
-                                    Stofzuigen
-                                    <a href="" class="check-mark" id="1"><span class="float-right fas fa-check"></span></a>
-                                  </li>
-                                  <li class="list-group-item" id="item2">
-                                    wc
-                                    <a href="" class="check-mark" id="2"><span class="float-right fas fa-check"></span></a>
-                                  </li>
-                                  <li class="list-group-item" id="item3">wc
-                                    <a href="" class="check-mark" id="3"><span class="float-right fas fa-check"></span></a>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div class="card-add-more">
-                                <form class="form-group">
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
-                                        <a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>
-                                        <a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>
-                                    </div>
-                                </form>
-                                  <button class="btn btn-link btn-block addToDo">
-                                      Add to-do
-                                  </button>
-                              </div>
-                          </div>
-
-                      </div>
-                      <!-- end of template card -->
-
-                      <!-- Template code for the cards of lists-->
-                      <div class="col-xs-12 col-sm-4">
-                          <div class="card" id="Household2">
-                              <div class="card-header">
-                                Household
-                                <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
-                                <a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>
-                                <a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>
-                              </div>
-                              <div class="card-body text-left" id="card-body">
-                                <ul class="list-group list-group-flush" id='newList'>
-                                </ul>
-                              </div>
-                              <div class="card-add-more">
-                                <form class="form-group">
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
-                                        <a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>
-                                        <a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>
-                                    </div>
-                                </form>
-                                  <button class="btn btn-link btn-block addToDo">
-                                      Add to-do
-                                  </button>
-                              </div>
-                          </div>
-
-                      </div>
-                      <!-- end of template card -->
-
-                    </div>
+                  <div class="row"></div>
               </div>
           </div>
       </div>
