@@ -62,22 +62,26 @@ $(document).on('ready', function() {
         );
 
       $('.row').append(cardHTML);
-      $('.closeBody').hide();
-      $('.card-body').hide();
+      $('.openBody').hide();
       $('.form-group').hide();
     }
   }
 
   if ($('.row').is(':empty')) {
-    console.log("Empty");
-    $('.row').append("Empty");
+    $('#explanation').show();
+  } else {
+    $('#explanation').slideUp('slow');
   };
 
-
-  $('.closeBody').hide();
-  $('.card-body').hide();
+  $('.openBody').hide();
   $('.form-group').hide();
   $('#inputFormList').hide();
+  $('#userFunctionality').hide();
+
+  $(document).on('click', '#openUserFunctionality', function(e) {
+    e.preventDefault();
+    $('#userFunctionality').slideToggle('fast');
+  });
 
   $(document).on('click', '#openFormList', function(e) {
     e.preventDefault();
@@ -87,6 +91,9 @@ $(document).on('ready', function() {
   $(document).on('click', '#addList', function(e) {
     e.preventDefault();
     let listName = $('#inputListName').val().trim();
+    if ($('.row').is(':empty') && listName) {
+        $('#explanation').slideUp('slow');
+    };
     addList(listName);
     $('#inputFormList').slideToggle('fast');
     $(this).val('');
@@ -96,6 +103,9 @@ $(document).on('ready', function() {
     if (e.which === 13) {
       e.preventDefault();
       let listName = $('#inputListName').val().trim();
+      if ($('.row').is(':empty') && listName) {
+          $('#explanation').slideUp('slow');
+      };
       addList(listName);
       $('#inputFormList').slideToggle('fast');
       $(this).val('');
