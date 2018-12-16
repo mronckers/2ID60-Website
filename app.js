@@ -13,30 +13,30 @@ $(document).on('ready', function() {
 
       toDoLists.push(newtodo);
 
-      let listGood = newtodo.list.replace(/\s+/g, '').replace("'","");
-      let todoGood = newtodo.todo.replace(/\s+/g, '').replace("'", "");
-      let newID = listGood+todoGood;
+      let listGood = list.replace(/\s+/g, '').replace("'","");
+      let todoGood = todo.replace(/\s+/g, '');
 
       let addition = (
         '<li class="list-group-item">'
-          + todo +
+          + todoGood +
           '<a href="" class="check-mark">'+
             '<span class="float-right fas fa-check"></span>'+
           '</a></li>'
         );
 
-      $('#'+list).children('.card-body').children('.list-group').append(addition);
-      $('#'+list).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
+      $('#'+listGood).children('.card-body').children('.list-group').append(addition);
+      $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
     }
   };
 
   let addList = function(list) {
     if (list) {
+      let listGood = list.replace(/\s+/g, '').replace("'","");
       let cardHTML = (
         '<div class="col-xs-12 col-sm-4">'+
-            '<div class="card" id="'+ list + '">' +
+            '<div class="card" id="'+ listGood + '">' +
                 '<div class="card-header">'+
-                   list +
+                   listGood +
                   '<a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>'+
                   '<a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>'+
                   '<a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>'+
@@ -128,14 +128,14 @@ $(document).on('ready', function() {
     e.preventDefault();
     $(this).toggle();
     $(this).siblings('.closeBody').toggle();
-    $(this).parents('.card').children('.card-body').toggle();
+    $(this).parents('.card').children('.card-body').slideToggle('fast');
   });
 
   $(document).on('click', '.closeBody', function(e) {
     e.preventDefault();
     $(this).toggle();
     $(this).siblings('.openBody').toggle();
-    $(this).parents('.card').children('.card-body').toggle();
+    $(this).parents('.card').children('.card-body').slideToggle('fast');
   });
 
   $(document).on('click', '.check-mark', function(e) {
