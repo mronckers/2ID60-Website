@@ -5,7 +5,7 @@ $(document).on('ready', function() {
   ----------------------------------------------------------*/
   let addList = function(list) {
     if (list) {
-      let listGood = list.replace(/\s+/g, '').replace("'","");
+      let listGood = list.replace("'","");
       let cardHTML = (
         '<div class="col-xs-12 col-sm-4">'+
             '<div class="card" id="'+ listGood + '">' +
