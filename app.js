@@ -1,82 +1,96 @@
 $(document).on('ready', function() {
 
+  let toDos = [];
+  let lists = [];
+
+  let ToDo = function(todo, list) {
+    this.todoAttr = todo;
+    console.log(todo);
+    this.listAttr = list;
+    console.log(list);
+  }
   /* ----------------------------------------------------------
-  Function for adding lists to the main container
+  Functions for adding lists to the main container
   ----------------------------------------------------------*/
+  //adds the lists to the arrays for storage later on
   let addList = function(list) {
     if (list) {
-      let listGood = list.replace("'","");
-      let cardHTML = (
-        '<div class="col-xs-12 col-sm-4">'+
-            '<div class="card" id="'+ listGood + '">' +
-                '<div class="card-header">'+
-                   listGood +
-                  '<a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>'+
-                  '<a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>'+
-                  '<a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>'+
-                '</div>'+
-                '<div class="card-body text-left" id="card-body">'+
-                  '<ul class="list-group list-group-flush" id="newList">'+
-                  '</ul>'+
-                '</div>'+
-                '<div class="card-add-more">'+
-                  '<form class="form-group">'+
-                      '<div class="input-group">'+
-                          '<input class="form-control" type="text" id="newItemInput" placeholder="To do...">'+
-                          '<a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>'+
-                          '<a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>'+
-                      '</div>'+
-                  '</form>'+
-                    '<button class="btn btn-block addToDo">'+
-                        'Add to-do'+
-                    '</button>'+
-                '</div>'+
-            '</div>'+
-        '</div>'
-        );
+      let listGood = list.replace("'","").replace(";","");
+      lists.push(listGood);
+      save();
+      drawList(listGood);
 
-      $('.row').append(cardHTML);
       $('.openBody').hide();
       $('.form-group').hide();
     }
   };
 
+  //draws the lists
+  var drawList = function(listName) {
+    let cardHTML = (
+      '<div class="col-xs-12 col-sm-4">'+
+          '<div class="card" id="'+ listName + '">' +
+              '<div class="card-header">'+
+                 listName +
+                '<a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>'+
+                '<a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>'+
+                '<a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>'+
+              '</div>'+
+              '<div class="card-body text-left" id="card-body">'+
+                '<ul class="list-group list-group-flush" id="newList">'+
+                '</ul>'+
+              '</div>'+
+              '<div class="card-add-more">'+
+                '<form class="form-group">'+
+                    '<div class="input-group">'+
+                        '<input class="form-control" type="text" id="newItemInput" placeholder="To do...">'+
+                        '<a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>'+
+                        '<a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>'+
+                    '</div>'+
+                '</form>'+
+                  '<button class="btn btn-block addToDo">'+
+                      'Add to-do'+
+                  '</button>'+
+              '</div>'+
+          '</div>'+
+      '</div>'
+      );
+
+    $('.row').append(cardHTML);
+  }
+
   /* ----------------------------------------------------------
-  Function for adding todo's to the specific list
+  Functions for adding todo's to the specific list
   -------------------------------------------------------------*/
+  //adds todos to the list for storage later on
   let addToDo = function(todo, list) {
     if (todo) {
-      let listGood = list.replace(/\s+/g, '').replace("'","");
-      let todoGood = todo.replace("'", "");
+      let listGood = list.replace("'","").replace(";","");
+      let todoGood = todo.replace("'","").replace(";","");
 
-      let addition = (
-        '<li class="list-group-item">'
-          + todoGood +
-          '<a href="" class="check-mark">'+
-            '<span class="float-right fas fa-check"></span>'+
-          '</a></li>'
-        );
+      newTodo = new ToDo(todoGood, listGood);
+      console.log(newTodo.todoAttr);
+      toDos.push(newTodo);
+      console.log(toDos);
+      save();
+      drawToDo(todoGood, listGood);
 
-      $('#'+listGood).children('.card-body').children('.list-group').append(addition);
       $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
     }
   };
 
-  /* -----------------------------------------------------------
-  Set the screen to standard values
-  -------------------------------------------------------------*/
-  if ($('.row').is(':empty')) {
-    $('#explanation').show();
-  } else {
-    $('#explanation').slideUp('slow');
-  };
-
-  $('.openBody').hide();
-  $('.form-group').hide();
-  $('#inputFormList').hide();
-  $('#userFunctionality').hide();
-
-
+  //draws todo
+  let drawToDo = function(todo, list) {
+    let addition = (
+      '<li class="list-group-item" id="'+ todo +'">'
+        + todo +
+        '<a href="" class="check-mark">'+
+          '<span class="float-right fas fa-check"></span>'+
+        '</a></li>'
+      );
+      console.log(list);
+    $('#'+list).children('.card-body').children('.list-group').append(addition);
+  }
 
   /*------------------------------------------------------------
   All functions that handle user interaction
@@ -108,7 +122,7 @@ $(document).on('ready', function() {
 
     addList(listName);
     $('#inputFormList').slideToggle('fast');
-    $(this).val('');
+    $('#inputListName').val('');
   });
 
   //handles the key "enter" after typing the list-name
@@ -142,6 +156,12 @@ $(document).on('ready', function() {
   $(document).on('click', '.removeCard', function(e) {
     e.preventDefault();
     $(this).parents('.col-xs-12').remove();
+    for (let i=0; i < lists.length; i++) {
+      if (lists[i] === $(this).parents('.card').attr('id')) {
+        lists.splice(i,1);
+        save();
+      };
+    };
   });
 
   //handles the plus button to open the body of the card
@@ -164,6 +184,12 @@ $(document).on('ready', function() {
   $(document).on('click', '.check-mark', function(e) {
     e.preventDefault();
     $(this).parents('.list-group-item').remove();
+    for (let i=0; i < toDos.length; i++) {
+      if (toDos[i].todoAttr === $(this).parents('.list-group-item').attr('id')) {
+        toDos.splice(i,1);
+        save();
+      };
+    };
   });
 
   //handles mouse click on plus button for adding items to the current list
@@ -202,5 +228,54 @@ $(document).on('ready', function() {
     $(this).siblings('.form-group').toggle();
     $(this).toggle();
   });
+
+  /* --------------------------------------------------
+  Storage functions
+  ----------------------------------*/
+  //draws the lists that are in the local storage of the browser
+  let showLists = function() {
+    let storedLists = JSON.parse(localStorage.getItem("toDoLists"));
+    for (let i=0; i < storedLists.length; i++) {
+      drawList(storedLists[i]);
+    };
+  };
+
+  //draws the todos that are in the local storage of the browser
+  let showToDos = function() {
+    let storedToDos = JSON.parse(localStorage.getItem("TODOS"));
+    for (let i=0; i < storedToDos.length; i++) {
+      drawToDo(storedToDos[i].todoAttr, storedToDos[i].listAttr);
+    };
+  };
+
+  //save the updated lists to local storage
+  let save = function() {
+    localStorage["toDoLists"] = JSON.stringify(lists);
+    localStorage["TODOS"] = JSON.stringify(toDos);
+  }
+
+  /* -----------------------------------------------------------
+  Set the screen to standard values
+  -------------------------------------------------------------*/
+  //find out if there are already todos in the local storage and draw them
+  if (localStorage.getItem("toDoLists")) {
+    lists = JSON.parse(localStorage["toDoLists"]);
+    showLists();
+    if (localStorage.getItem("TODOS")) {
+      toDos = JSON.parse(localStorage["TODOS"]);
+      showToDos();
+    };
+  };
+
+  if ($('.row').is(':empty')) {
+    $('#explanation').show();
+  } else {
+    $('#explanation').slideUp('slow');
+  };
+
+  $('.openBody').hide();
+  $('.form-group').hide();
+  $('#inputFormList').hide();
+  $('#userFunctionality').hide();
 
 });
