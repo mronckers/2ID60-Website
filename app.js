@@ -47,7 +47,7 @@ $(document).on('ready', function() {
   let addToDo = function(todo, list) {
     if (todo) {
       let listGood = list.replace(/\s+/g, '').replace("'","");
-      let todoGood = todo.replace(/\s+/g, '');
+      let todoGood = todo.replace("'", "");
 
       let addition = (
         '<li class="list-group-item">'
