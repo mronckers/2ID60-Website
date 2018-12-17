@@ -1,34 +1,8 @@
 $(document).on('ready', function() {
 
-  var toDoLists = [];
-
-  let ToDo = function(todo, list) {
-    this.todo = todo;
-    this.list = list;
-  };
-
-  let addToDo = function(todo, list) {
-    if (todo) {
-      newtodo = new ToDo(todo, list);
-
-      toDoLists.push(newtodo);
-
-      let listGood = list.replace(/\s+/g, '').replace("'","");
-      let todoGood = todo.replace(/\s+/g, '');
-
-      let addition = (
-        '<li class="list-group-item">'
-          + todoGood +
-          '<a href="" class="check-mark">'+
-            '<span class="float-right fas fa-check"></span>'+
-          '</a></li>'
-        );
-
-      $('#'+listGood).children('.card-body').children('.list-group').append(addition);
-      $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
-    }
-  };
-
+  /* ----------------------------------------------------------
+  Function for adding lists to the main container
+  ----------------------------------------------------------*/
   let addList = function(list) {
     if (list) {
       let listGood = list.replace(/\s+/g, '').replace("'","");
@@ -65,8 +39,32 @@ $(document).on('ready', function() {
       $('.openBody').hide();
       $('.form-group').hide();
     }
-  }
+  };
 
+  /* ----------------------------------------------------------
+  Function for adding todo's to the specific list
+  -------------------------------------------------------------*/
+  let addToDo = function(todo, list) {
+    if (todo) {
+      let listGood = list.replace(/\s+/g, '').replace("'","");
+      let todoGood = todo.replace(/\s+/g, '');
+
+      let addition = (
+        '<li class="list-group-item">'
+          + todoGood +
+          '<a href="" class="check-mark">'+
+            '<span class="float-right fas fa-check"></span>'+
+          '</a></li>'
+        );
+
+      $('#'+listGood).children('.card-body').children('.list-group').append(addition);
+      $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
+    }
+  };
+
+  /* -----------------------------------------------------------
+  Set the screen to standard values
+  -------------------------------------------------------------*/
   if ($('.row').is(':empty')) {
     $('#explanation').show();
   } else {
@@ -78,52 +76,75 @@ $(document).on('ready', function() {
   $('#inputFormList').hide();
   $('#userFunctionality').hide();
 
+
+
+  /*------------------------------------------------------------
+  All functions that handle user interaction
+  --------------------------------------------------------*/
+
+  /************************* navbar ************************/
+
+  //handles clicking the user button by opening the "userfunctionality"
   $(document).on('click', '#openUserFunctionality', function(e) {
     e.preventDefault();
     $('#userFunctionality').slideToggle('fast');
   });
 
+  //handles clicking the button "Add list" to open the form for lists
   $(document).on('click', '#openFormList', function(e) {
     e.preventDefault();
     $('#inputFormList').slideToggle('fast');
   });
 
+  //handles the "plus button" after typing the list-name
   $(document).on('click', '#addList', function(e) {
     e.preventDefault();
     let listName = $('#inputListName').val().trim();
+
+    //hide explanation if first list is added
     if ($('.row').is(':empty') && listName) {
         $('#explanation').slideUp('slow');
     };
+
     addList(listName);
     $('#inputFormList').slideToggle('fast');
     $(this).val('');
   });
 
+  //handles the key "enter" after typing the list-name
   $(document).on('keypress','#inputListName', function(e) {
     if (e.which === 13) {
       e.preventDefault();
       let listName = $('#inputListName').val().trim();
+
+      //hide explanation if first list is added
       if ($('.row').is(':empty') && listName) {
           $('#explanation').slideUp('slow');
       };
+
       addList(listName);
       $('#inputFormList').slideToggle('fast');
       $(this).val('');
     }
   });
 
+  //handles the trash button to cancel adding a list
   $(document).on('click', '#cancelAddList', function(e) {
     e.preventDefault();
     $('#inputFormList').slideToggle('fast');
     $('#inputListName').val('');
   })
 
+
+  /*****************cards********************************/
+
+  //handles the trash button to remove the particular card
   $(document).on('click', '.removeCard', function(e) {
     e.preventDefault();
     $(this).parents('.col-xs-12').remove();
   });
 
-
+  //handles the plus button to open the body of the card
   $(document).on('click', '.openBody', function(e) {
     e.preventDefault();
     $(this).toggle();
@@ -131,6 +152,7 @@ $(document).on('ready', function() {
     $(this).parents('.card').children('.card-body').slideToggle('fast');
   });
 
+  //handles the minus button to close the body of the card
   $(document).on('click', '.closeBody', function(e) {
     e.preventDefault();
     $(this).toggle();
@@ -138,6 +160,7 @@ $(document).on('ready', function() {
     $(this).parents('.card').children('.card-body').slideToggle('fast');
   });
 
+  //handles the check-mark to delete the particular todo
   $(document).on('click', '.check-mark', function(e) {
     e.preventDefault();
     $(this).parents('.list-group-item').remove();
@@ -163,7 +186,6 @@ $(document).on('ready', function() {
       $(this).parents('.form-group').toggle();
       $(this).parents('.form-group').siblings('.addToDo').toggle();
     }
-
   });
 
   //handles pressing the cancel (trash-can) button for cancelling the addition of a todo
@@ -179,7 +201,6 @@ $(document).on('ready', function() {
     $(this).siblings('.form-control').val('');
     $(this).siblings('.form-group').toggle();
     $(this).toggle();
-
   });
 
 });

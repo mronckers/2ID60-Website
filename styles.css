@@ -1,5 +1,44 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
 
+/* --------------------------------
+ Overall styling
+ ------------------------------------*/
+html,
+body {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  background: #FFF;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+.fas {
+  color: #50a1af;
+  padding: 5px;
+}
+
+.fas:hover {
+  color: grey;
+}
+
+.fa-check {
+  color: grey;
+}
+
+.fa-check:hover{
+  color:#4ab279;
+}
+
+input, #newItemInput {
+  border: 1px solid #50a1af;
+  border-radius: 5px;
+}
+
+/* -----------------------------------
+ Styling of navbar
+ -------------------------------------*/
 .navbar-light {
   background-color: red;
 }
@@ -13,17 +52,9 @@
   padding: 0px 20px 1px 20px;
 }
 
-html,
-body {
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
-  height: 100%;
-  width: 100%;
-  background: #FFF;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-}
-
+/* ---------------------------------------
+Styling of container of the cards
+------------------------------------------*/
 .wrapper {
   display: table;
   height: 100%;
@@ -54,12 +85,9 @@ h1.heading {
   background-color:rgba(80, 161, 175, 0.2);
 }
 
-input, #newItemInput {
-  border: 1px solid #50a1af;
-  border-radius: 5px;
-}
-
-
+/* ----------------------------------
+ Styling of cards
+ ------------------------------------*/
 .card {
   display: block;
     margin-bottom: 20px;
@@ -81,9 +109,22 @@ input, #newItemInput {
   opacity: 0.9;
 }
 
+.card-header .fas  {
+  color: white;
+}
+
+.card-header .fas:hover{
+  color: grey;
+}
+
 .card-body {
   padding:0 !important;
   text-align:left;
+}
+
+.card-add-more button {
+  color:#50a1af !important;
+  background-color: white !important;
 }
 
 .form-group {
@@ -93,34 +134,4 @@ input, #newItemInput {
 
 .card-add-more a {
   padding: 5px;
-}
-
-.card-add-more button {
-  color:#50a1af !important;
-  background-color: white !important;
-}
-
-.fas {
-  color: #50a1af;
-  padding: 5px;
-}
-
-.fas:hover {
-  color: grey;
-}
-
-.fa-check {
-  color: grey;
-}
-
-.fa-check:hover{
-  color:#4ab279;
-}
-
-.card-header .fas  {
-  color: white;
-}
-
-.card-header .fas:hover{
-  color: grey;
 }
