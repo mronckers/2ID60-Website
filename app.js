@@ -9,13 +9,15 @@ $(document).on('ready', function() {
     this.listAttr = list;
     console.log(list);
   }
-  /* ----------------------------------------------------------
+
+
+  /* --------------------------------------------------------------------------
   Functions for adding lists to the main container
-  ----------------------------------------------------------*/
+  ---------------------------------------------------------------------------*/
   //adds the lists to the arrays for storage later on
   let addList = function(list) {
     if (list) {
-      let listGood = list.replace("'","").replace(";","");
+      let listGood = list.replace("'","").replace(";","").replace(/\s+/g,"");
       lists.push(listGood);
       save();
       drawList(listGood);
@@ -26,12 +28,12 @@ $(document).on('ready', function() {
   };
 
   //draws the lists
-  var drawList = function(listName) {
+  var drawList = function(listGood) {
     let cardHTML = (
       '<div class="col-xs-12 col-sm-4">'+
-          '<div class="card" id="'+ listName + '">' +
+          '<div class="card" id="'+ listGood + '">' +
               '<div class="card-header">'+
-                 listName +
+                 listGood +
                 '<a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>'+
                 '<a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>'+
                 '<a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>'+
@@ -59,20 +61,22 @@ $(document).on('ready', function() {
     $('.row').append(cardHTML);
   }
 
-  /* ----------------------------------------------------------
+
+  /* --------------------------------------------------------------------------
   Functions for adding todo's to the specific list
-  -------------------------------------------------------------*/
-  //adds todos to the list for storage later on
+  ---------------------------------------------------------------------------*/
+  //adds todos to the array for storage later on
   let addToDo = function(todo, list) {
     if (todo) {
-      let listGood = list.replace("'","").replace(";","");
+      let listGood = list.replace("'","").replace(";","").replace(/\s+/g, "");
       let todoGood = todo.replace("'","").replace(";","");
 
       newTodo = new ToDo(todoGood, listGood);
       console.log(newTodo.todoAttr);
       toDos.push(newTodo);
-      console.log(toDos);
+      //console.log(toDos);
       save();
+      console.log("save");
       drawToDo(todoGood, listGood);
 
       $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
@@ -81,6 +85,7 @@ $(document).on('ready', function() {
 
   //draws todo
   let drawToDo = function(todo, list) {
+    console.log(list);
     let addition = (
       '<li class="list-group-item" id="'+ todo +'">'
         + todo +
@@ -88,15 +93,19 @@ $(document).on('ready', function() {
           '<span class="float-right fas fa-check"></span>'+
         '</a></li>'
       );
-      console.log(list);
+    console.log(lists);
     $('#'+list).children('.card-body').children('.list-group').append(addition);
-  }
+    console.log('#'+list);
+  };
 
-  /*------------------------------------------------------------
+
+
+  /*----------------------------------------------------------------------------
   All functions that handle user interaction
-  --------------------------------------------------------*/
+  ----------------------------------------------------------------------------*/
 
-  /************************* navbar ************************/
+
+  /********************************* navbar **********************************/
 
   //handles clicking the user button by opening the "userfunctionality"
   $(document).on('click', '#openUserFunctionality', function(e) {
@@ -150,7 +159,9 @@ $(document).on('ready', function() {
   })
 
 
-  /*****************cards********************************/
+
+
+  /**********************************cards*************************************/
 
   //handles the trash button to remove the particular card
   $(document).on('click', '.removeCard', function(e) {
@@ -229,9 +240,10 @@ $(document).on('ready', function() {
     $(this).toggle();
   });
 
-  /* --------------------------------------------------
+
+  /* --------------------------------------------------------------------------
   Storage functions
-  ----------------------------------*/
+  ---------------------------------------------------------------------------*/
   //draws the lists that are in the local storage of the browser
   let showLists = function() {
     let storedLists = JSON.parse(localStorage.getItem("toDoLists"));
@@ -248,16 +260,17 @@ $(document).on('ready', function() {
     };
   };
 
-  //save the updated lists to local storage
+  //save the updated arrays to local storage
   let save = function() {
     localStorage["toDoLists"] = JSON.stringify(lists);
     localStorage["TODOS"] = JSON.stringify(toDos);
   }
 
-  /* -----------------------------------------------------------
-  Set the screen to standard values
-  -------------------------------------------------------------*/
-  //find out if there are already todos in the local storage and draw them
+
+  /* ---------------------------------------------------------------------------
+  Set the window to standard values
+  ----------------------------------------------------------------------------*/
+  //find out if there are already lists/todos in the local storage and draw them
   if (localStorage.getItem("toDoLists")) {
     lists = JSON.parse(localStorage["toDoLists"]);
     showLists();
@@ -267,6 +280,7 @@ $(document).on('ready', function() {
     };
   };
 
+  //show explanation only if there are no lists shown
   if ($('.row').is(':empty')) {
     $('#explanation').show();
   } else {
