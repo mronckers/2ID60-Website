@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <!-- Material Design for Bootstrap, fonts and icons -->
+    <!-- Material Design for Bootstrap and icons -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
 
@@ -15,6 +15,8 @@
   </head>
 
   <body>
+
+    <!-- Navigation bar with two buttons for "user" and "add list" -->
     <nav class="navbar navbar-expand navbar-light bg-light">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -28,12 +30,14 @@
       </ul>
     </nav>
 
+    <!-- Form for adding a new list and choosing the name -->
     <div class="float-right bg-light" id="inputFormList">
       <a href="" class="float-right" id="cancelAddList"><span class="fas fa-trash-alt"></span></a>
       <a href="" class="float-right" id="addList"><span class="fas fa-plus"></span></a>
       <input class="float-right" type="text" placeholder="Name..." id="inputListName"></input>
     </div>
 
+    <!-- Placeholder for what will be the user input in future updates -->
     <div class="bg-light" id="userFunctionality">
       <p>There is no user functionality yet.</p>
     </div>
@@ -47,6 +51,8 @@
                   To-do lists
               </h1>
           </div>
+
+          <!-- Explanation of how the website works for "novice" users -->
           <div id="explanation">
             <p>
               This is a website to create to-do lists. You can sort your to-do's
@@ -60,6 +66,9 @@
               <br> If you have finished the whole list, click the trash can <span class="fas fa-trash-alt"></span> and the list will be deleted.
             </p>
           </div>
+
+          <!-- Empty container for the cards of lists and to-dos
+              Cards will be added inside the "row" class -->
           <div class="content">
               <div class="container">
                   <div class="row"></div>
@@ -68,8 +77,8 @@
       </div>
   </section>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- JavaScript -->
+    <!-- jQuery first, then Bootstrap JS, then "app.js" -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="app.js"></script>

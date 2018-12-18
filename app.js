@@ -1,14 +1,12 @@
 $(document).on('ready', function() {
 
-  let toDos = [];
-  let lists = [];
+  let toDoArray = [];
+  let listArray = [];
 
   let ToDo = function(todo, list) {
     this.todoAttr = todo;
-    console.log(todo);
     this.listAttr = list;
-    console.log(list);
-  }
+  };
 
 
   /* --------------------------------------------------------------------------
@@ -18,7 +16,7 @@ $(document).on('ready', function() {
   let addList = function(list) {
     if (list) {
       let listGood = list.replace("'","").replace(";","").replace(/\s+/g,"");
-      lists.push(listGood);
+      listArray.push(listGood);
       save();
       drawList(listGood);
 
@@ -59,7 +57,7 @@ $(document).on('ready', function() {
       );
 
     $('.row').append(cardHTML);
-  }
+  };
 
 
   /* --------------------------------------------------------------------------
@@ -72,11 +70,9 @@ $(document).on('ready', function() {
       let todoGood = todo.replace("'","").replace(";","");
 
       newTodo = new ToDo(todoGood, listGood);
-      console.log(newTodo.todoAttr);
-      toDos.push(newTodo);
-      //console.log(toDos);
+      toDoArray.push(newTodo);
       save();
-      console.log("save");
+
       drawToDo(todoGood, listGood);
 
       $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
@@ -85,7 +81,6 @@ $(document).on('ready', function() {
 
   //draws todo
   let drawToDo = function(todo, list) {
-    console.log(list);
     let addition = (
       '<li class="list-group-item" id="'+ todo +'">'
         + todo +
@@ -93,9 +88,8 @@ $(document).on('ready', function() {
           '<span class="float-right fas fa-check"></span>'+
         '</a></li>'
       );
-    console.log(lists);
+
     $('#'+list).children('.card-body').children('.list-group').append(addition);
-    console.log('#'+list);
   };
 
 
@@ -156,7 +150,7 @@ $(document).on('ready', function() {
     e.preventDefault();
     $('#inputFormList').slideToggle('fast');
     $('#inputListName').val('');
-  })
+  });
 
 
 
@@ -167,9 +161,9 @@ $(document).on('ready', function() {
   $(document).on('click', '.removeCard', function(e) {
     e.preventDefault();
     $(this).parents('.col-xs-12').remove();
-    for (let i=0; i < lists.length; i++) {
-      if (lists[i] === $(this).parents('.card').attr('id')) {
-        lists.splice(i,1);
+    for (let i=0; i < listArray.length; i++) {
+      if (listArray[i] === $(this).parents('.card').attr('id')) {
+        listArray.splice(i,1);
         save();
       };
     };
@@ -195,9 +189,9 @@ $(document).on('ready', function() {
   $(document).on('click', '.check-mark', function(e) {
     e.preventDefault();
     $(this).parents('.list-group-item').remove();
-    for (let i=0; i < toDos.length; i++) {
-      if (toDos[i].todoAttr === $(this).parents('.list-group-item').attr('id')) {
-        toDos.splice(i,1);
+    for (let i=0; i < toDoArray.length; i++) {
+      if (toDoArray[i].todoAttr === $(this).parents('.list-group-item').attr('id')) {
+        toDoArray.splice(i,1);
         save();
       };
     };
@@ -262,9 +256,9 @@ $(document).on('ready', function() {
 
   //save the updated arrays to local storage
   let save = function() {
-    localStorage["toDoLists"] = JSON.stringify(lists);
-    localStorage["TODOS"] = JSON.stringify(toDos);
-  }
+    localStorage["toDoLists"] = JSON.stringify(listArray);
+    localStorage["TODOS"] = JSON.stringify(toDoArray);
+  };
 
 
   /* ---------------------------------------------------------------------------
@@ -272,10 +266,10 @@ $(document).on('ready', function() {
   ----------------------------------------------------------------------------*/
   //find out if there are already lists/todos in the local storage and draw them
   if (localStorage.getItem("toDoLists")) {
-    lists = JSON.parse(localStorage["toDoLists"]);
+    listArray = JSON.parse(localStorage["toDoLists"]);
     showLists();
     if (localStorage.getItem("TODOS")) {
-      toDos = JSON.parse(localStorage["TODOS"]);
+      toDoArray = JSON.parse(localStorage["TODOS"]);
       showToDos();
     };
   };
