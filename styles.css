@@ -52,6 +52,16 @@ input, #newItemInput {
   padding: 0px 20px 1px 20px;
 }
 
+.modal-dialog {
+  border: 3px solid #50a1af;
+  border-radius: 10px;
+}
+
+.modal-body {
+  border-width: 1px 0px 1px 0px !important;
+  border: solid #50a1af;
+}
+
 /* ---------------------------------------
 Styling of container of the cards
 ------------------------------------------*/
