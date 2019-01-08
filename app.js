@@ -160,14 +160,38 @@ $(document).on('ready', function() {
   //handles the trash button to remove the particular card
   $(document).on('click', '.removeCard', function(e) {
     e.preventDefault();
-    $(this).parents('.col-xs-12').remove();
+    $('#myModal').show();
+    card = this;
+
+    let ok = document.getElementById("OK");
+    let cancel = document.getElementById("Cancel");
+    let closePopUp = document.getElementById("closePopUp");
+
+    ok.onclick = function() {
+      deleteList(card);
+      $('#myModal').hide();
+    };
+
+    cancel.onclick = function() {
+      $('#myModal').hide();
+    };
+
+    closePopUp.onclick = function() {
+      $('#myModal').hide();
+    };
+
+  });
+
+  //deletes the list from the html and storage
+  let deleteList = function(card) {
+    $(card).parents('.col-xs-12').remove();
     for (let i=0; i < listArray.length; i++) {
-      if (listArray[i] === $(this).parents('.card').attr('id')) {
+      if (listArray[i] === $(card).parents('.card').attr('id')) {
         listArray.splice(i,1);
         save();
       };
     };
-  });
+  }
 
   //handles the plus button to open the body of the card
   $(document).on('click', '.openBody', function(e) {
