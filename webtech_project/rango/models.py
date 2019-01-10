@@ -14,7 +14,7 @@ class User(models.Model):
 class TodoList(models.Model):
     name = models.CharField(max_length = 128, unique = True)
     colour = models.CharField(max_length = 128)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete = models.CASCADE)
     def __str__(self): 
         return self.name
     def __unicode__(self):
@@ -22,7 +22,7 @@ class TodoList(models.Model):
   
 class Task(models.Model):
     content = models.TextField()
-    parent_list = models.ForeignKey(TodoList)
+    parent_list = models.ForeignKey(TodoList,on_delete = models.CASCADE )
     def __str__(self):
         return self.content
     def __unicode__(self):
