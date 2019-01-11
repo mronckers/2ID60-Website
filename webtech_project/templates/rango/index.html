@@ -1,19 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 {% load staticfiles %}
-<html>
+<html lang="en">
   <head>
-    <title>Rango</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %">
+    <!-- Material Design for Bootstrap and icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+
+    <title>To-do-list</title>
   </head>
+
   <body>
-    <h1>Rango says...</h1>
-    <div>
-      hey there partner! <br />
-      <strong>{{ boldmessage }}</strong><br />
+
+    <!-- Navigation bar with two buttons for "user" and "add list" -->
+    <nav class="navbar navbar-expand navbar-light bg-light">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#" id="openUserFunctionality">User<span class="fas fa-user"></span></a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#" id="openFormList">Add list<span class="fas fa-plus"></span></a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Form for adding a new list and choosing the name -->
+    <div class="float-right bg-light" id="inputFormList">
+      <a href="" class="float-right" id="cancelAddList"><span class="fas fa-trash-alt"></span></a>
+      <a href="" class="float-right" id="addList"><span class="fas fa-plus"></span></a>
+      <input class="float-right" type="text" placeholder="Name..." id="inputListName"></input>
     </div>
-    <div>
-      <a href="/rango/about/">About</a><br />
-      <img src="{% static "images/hi.jpg" %}"
-           alt = "Beautiful home"
+
+    <!-- Placeholder for what will be the user input in future updates -->
+    <div class="bg-light" id="userFunctionality">
+      <p>There is no user functionality yet.</p>
     </div>
+
+
+    <!-- Main content of the to-do-list website -->
+    <section class="wrapper">
+      <div class="container-fostrap">
+          <div>
+              <h1 class="heading">
+                  To-do lists
+              </h1>
+          </div>
+
+          <!-- Explanation of how the website works for "novice" users -->
+          <div id="explanation">
+            <p>
+              This is a website to create to-do lists. You can sort your to-dos
+              by adding them to different lists. This will help you to get a good
+              overview of the different kind of tasks you still have to do.
+              <br>
+              <br>You have not added any to-do lists yet. To add a list click 'Add list<span class="fas fa-plus"></span>' in the top right.
+              <br>Insert a name for your list and click <span class="fas fa-plus"></span> next to it.
+              <br>To-do's can be added to the list by clicking 'Add to-do' in the specific list it belongs to.
+              <br> If you have finished a to-do, click on the check-mark <span class="fas fa-check"></span> and the to-do will be deleted.
+              <br> If you have finished the whole list, click the trash can <span class="fas fa-trash-alt"></span> and the list will be deleted.
+            </p>
+          </div>
+
+          <!-- Empty container for the cards of lists and to-dos
+              Cards will be added inside the "row" class -->
+          <div class="content">
+              <div class="container">
+                  <div class="row"></div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Pop up for deleting  -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Delete list?</h4>
+          <button type="button" class="close" id="closePopUp">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          Are you sure you want to delete this list?
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="OK">OK</button>
+          <button type="button" class="btn btn-danger" id="Cancel">Cancel</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+    <!-- JavaScript -->
+    <!-- jQuery first, then Bootstrap JS, then "app.js" -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
   </body>
 </html>
