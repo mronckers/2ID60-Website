@@ -1,5 +1,5 @@
 <!doctype html>
-{% load staticfiles %}
+{% load static %}
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -73,34 +73,8 @@
           <div class="content">
               <div class="container">
                   <div class="row">
-                      {% for list in lists %}
-                      <div class="col-xs-12 col-sm-4">
-                          <div class="card" id= "test">
-                              <div class="card-header">
-                                {{ list.name }}
-                                <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
-                                <a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>
-                                <a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>
-                              </div>
-                              <div class="card-body text-left" id="card-body">
-                                <ul class="list-group list-group-flush" id="newList">
-                                </ul>
-                              </div>
-                              <div class="card-add-more">
-                                <form class="form-group">
-                                    <div class="input-group">
-                                        <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
-                                        <a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>
-                                        <a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>
-                                    </div>
-                                </form>
-                                  <button class="btn btn-block addToDo">
-                                      Add to-do
-                                  </button>
-                              </div>
-                          </div>
-                      </div>
-                      {% endfor %}
+                      {% block content %}
+                      {% endblock %}
                   </div>
               </div>
           </div>
