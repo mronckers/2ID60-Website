@@ -1,4 +1,4 @@
-{% extends 'rango/index.html' %}
+{% extends 'rango/base.html' %}
 
 {% block content %}
     {% for list in lists %}
@@ -12,6 +12,14 @@
             </div>
             <div class="card-body text-left" id="card-body">
               <ul class="list-group list-group-flush" id="newList">
+                {% for task in tasks %}
+                  {% ifequal task.parent_list list %}
+                <li class="list-group-item" id="todo"> {{task.content}}
+                <a href="" class="check-mark">
+                  <span class="float-right fas fa-check"></span>
+                </a></li>
+                  {% endifequal %}
+                {% endfor %}
               </ul>
             </div>
             <div class="card-add-more">
@@ -29,4 +37,4 @@
         </div>
     </div>
     {% endfor %}
-{% endblock %}
+{% endblock content %}
