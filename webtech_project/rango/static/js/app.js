@@ -93,7 +93,57 @@ $(document).on('ready', function() {
   };
 
 
+/*-------------- Functions for the AJAX posts ----------*/
+  /* Function to get csrf token */
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
 
+  /* Sends POST request to url with data.
+   * In the case of List, data is the name of the list,
+   * I the case of Task, the content (named 'name' and not 'content', sorry for that)
+   * and the parent list name
+   */
+  function modifyAJAX(data, url){
+    var csrf_token = getCookie('csrftoken');
+    $.ajax({
+        url: url,
+        data: data,
+        type: 'POST',
+        dataType : 'text',
+        headers: {'X-CSRFToken': csrf_token },
+        success: function (data, textStatus, jqXHR) {
+          /*TODO This should be notified to the user via pop up I guess*/
+          if(jqXHR.status != 200){
+            console.log('Error on db access ', jqXHR.status);
+          }
+        },
+        error : function (jqXHR, textStatus){
+          console.log('Error on AJAX post:', textStatus);
+        }
+    });  
+  
+  }
+  /*Sends post to reques modification of list*/
+  function modifyListAJAX(listName, url){
+    modifyAJAX({'name': listName});
+  }
+  
+  function modifyTaskAJAX(content, parent_list, url){
+    modifyAJAX({'name': content, 'parent_list': parent_list};)
+  }
   /*----------------------------------------------------------------------------
   All functions that handle user interaction
   ----------------------------------------------------------------------------*/
@@ -117,15 +167,18 @@ $(document).on('ready', function() {
   $(document).on('click', '#addList', function(e) {
     e.preventDefault();
     let listName = $('#inputListName').val().trim();
-
     //hide explanation if first list is added
     if ($('.row').is(':empty') && listName) {
         $('#explanation').slideUp('slow');
     };
 
-    addList(listName);
+    addList(listName); 
     $('#inputFormList').slideToggle('fast');
     $('#inputListName').val('');
+    
+    /*Store at db*/
+    modifyListAJAX(listName,'/add_list/');
+    
   });
 
   //handles the key "enter" after typing the list-name
@@ -142,6 +195,10 @@ $(document).on('ready', function() {
       addList(listName);
       $('#inputFormList').slideToggle('fast');
       $(this).val('');
+      
+      /*Store at db*/
+      modifyListAJAX(listName, '/add_list/');
+
     }
   });
 
@@ -170,6 +227,9 @@ $(document).on('ready', function() {
     ok.onclick = function() {
       deleteList(card);
       $('#myModal').hide();
+      /*Delete at db*/
+      let listName = $(card).parents('.card-header').text().replace(/\n/g, '').trim()
+      modifyListAJAX(listName, '/delete_list/');
     };
 
     cancel.onclick = function() {
@@ -224,8 +284,9 @@ $(document).on('ready', function() {
   //handles mouse click on plus button for adding items to the current list
   $(document).on('click', '.addItem', function (e) {
       e.preventDefault();
-      let todo = $(this).siblings('.form-control').val().trim();
+      let todo = $(this).siblings('.form-control').val();
       let list = $(this).parents('.card').attr('id');
+      
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
       $(this).parents('.form-group').siblings('.addToDo').toggle();

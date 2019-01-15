@@ -13,7 +13,7 @@ from django.db import models
 #
 class TodoList(models.Model):
     name = models.CharField(max_length = 128, unique = True)
-    colour = models.CharField(max_length = 128)
+    colour = models.CharField(max_length = 128, default = 'white')
     owner = models.ForeignKey(User, on_delete = models.CASCADE)
     def __str__(self):
         return self.name
@@ -21,7 +21,7 @@ class TodoList(models.Model):
         return self.name
 
 class Task(models.Model):
-    content = models.TextField()
+    content = models.TextField(default = '')
     parent_list = models.ForeignKey(TodoList,on_delete = models.CASCADE )
     def __str__(self):
         return self.content

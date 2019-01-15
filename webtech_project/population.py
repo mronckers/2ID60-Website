@@ -23,10 +23,7 @@ def populate():
             {"name":"Mieke", "email":"mieke.ronckers@gmail.com", "lists":lists2}]
 
 
-    print(User.objects.all())
-    print('k')
     u = User.objects.filter(first_name='Lucia')
-    print(u)
     u = u[0]
     for user in users:
         for todo_list in user["lists"]:
