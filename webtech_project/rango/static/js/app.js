@@ -298,6 +298,8 @@ $(document).on('ready', function() {
     };
   };
 
+  $('#explanation').hide();
+  
   //show explanation only if there are no lists shown
   if ($('.row').is(':empty')) {
     $('#explanation').show();
