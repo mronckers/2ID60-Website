@@ -92,8 +92,10 @@ $(document).on('ready', function() {
     $('#'+list).children('.card-body').children('.list-group').append(addition);
   };
 
-
+/*------------------------------------------------------*/
 /*-------------- Functions for the AJAX posts ----------*/
+/*------------------------------------------------------*/
+
   /* Function to get csrf token */
   function getCookie(name) {
     var cookieValue = null;
@@ -138,11 +140,11 @@ $(document).on('ready', function() {
   }
   /*Sends post to reques modification of list*/
   function modifyListAJAX(listName, url){
-    modifyAJAX({'name': listName});
+    modifyAJAX({'name': listName}, url);
   }
   
   function modifyTaskAJAX(content, parent_list, url){
-    modifyAJAX({'name': content, 'parent_list': parent_list};)
+    modifyAJAX({'name': content, 'parent_list': parent_list}, url);
   }
   /*----------------------------------------------------------------------------
   All functions that handle user interaction
@@ -272,6 +274,9 @@ $(document).on('ready', function() {
   //handles the check-mark to delete the particular todo
   $(document).on('click', '.check-mark', function(e) {
     e.preventDefault();
+    let parent_list = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim();
+    let content = $(this).parents('.list-group-item').attr('id');
+     
     $(this).parents('.list-group-item').remove();
     for (let i=0; i < toDoArray.length; i++) {
       if (toDoArray[i].todoAttr === $(this).parents('.list-group-item').attr('id')) {
@@ -279,6 +284,10 @@ $(document).on('ready', function() {
         save();
       };
     };
+
+    /* update db */
+    modifyTaskAJAX(content, parent_list, '/delete_task/')
+
   });
 
   //handles mouse click on plus button for adding items to the current list
@@ -286,10 +295,14 @@ $(document).on('ready', function() {
       e.preventDefault();
       let todo = $(this).siblings('.form-control').val();
       let list = $(this).parents('.card').attr('id');
-      
+      let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim(); 
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
       $(this).parents('.form-group').siblings('.addToDo').toggle();
+
+      /* Save task to the db*/
+      modifyTaskAJAX(todo, listName, '/add_task/');
+      
   });
 
   //handles pressing enter for adding items to the current list
@@ -298,9 +311,13 @@ $(document).on('ready', function() {
       e.preventDefault();
       let todo = $(this).val().trim();
       let list = $(this).parents('.card').attr('id');
+      let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim(); 
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
       $(this).parents('.form-group').siblings('.addToDo').toggle();
+      
+      /* Save task to the db*/
+      modifyTaskAJAX(todo, listName, '/add_task/');
     }
   });
 

@@ -29,4 +29,6 @@ urlpatterns = [
     url(r'^auth/', include('social_django.urls', namespace='social')), 
     url(r'^add_list/', views.add_list, name = 'add_list'),
     url(r'^delete_list/', views.delete_list, name = 'delete_list'),
+    url(r'^add_task/', views.add_task, name = 'add_task'),
+    url(r'^delete_task', views.delete_task, name = 'delete_task'),
 ]

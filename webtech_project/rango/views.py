@@ -71,11 +71,15 @@ def add_task(request):
         return response 
     # If not, try to access db
     try:
-        parent = TodoList.objects.get(name = request.POST['name'], owner = request.user)
-        task = Task.objects.get_or_create(content = request.POST['name'], parent_list = request.POST['parent_list'])
+        parent = TodoList.objects.get(name = request.POST['parent_list'], owner = request.user)
+        task = Task.objects.get_or_create(content = request.POST['name'], parent_list = parent)[0]
         task.save()
         return response 
-    except:
+    except Exception as inst:
+        print(type(inst))
+        print(inst)
+        print(inst.args)
+        print(Exception)
         return HttpResponse(content = "Adding task to the db raised an Exception", status = 500)
 
 # Post request must contain request.POST['task'] and request.POST['parent_list'] with the 
@@ -87,8 +91,9 @@ def delete_task(request):
         return response 
     # If not, try to access db
     try:
-        parent = TodoList.objects.get(name = request.POST['name'], owner = request.user)
-        tasks = Task.objects.filter(content = request.POST['name'], parent_list = parent).delete()
+        parent = TodoList.objects.get(name = request.POST['parent_list'], owner = request.user)
+        tasks = Task.objects.filter(content = request.POST['name'], parent_list = parent)
+        tasks.delete()
         return response 
     except:
         return HttpResponse(content = "Deleting task from the db raised an Exception", status = 500)
