@@ -120,7 +120,7 @@ $(document).on('ready', function() {
 
     //hide explanation if first list is added
     if ($('.row').is(':empty') && listName) {
-        $('#explanation').slideUp('slow');
+        $('#explanation').hide();
     };
 
     addList(listName);
@@ -136,7 +136,7 @@ $(document).on('ready', function() {
 
       //hide explanation if first list is added
       if ($('.row').is(':empty') && listName) {
-          $('#explanation').slideUp('slow');
+          $('#explanation').hide();
       };
 
       addList(listName);
@@ -302,7 +302,7 @@ $(document).on('ready', function() {
   if ($('.row').is(':empty')) {
     $('#explanation').show();
   } else {
-    $('#explanation').slideUp('slow');
+    $('#explanation').hide();
   };
 
   $('.openBody').hide();
