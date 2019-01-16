@@ -48,10 +48,7 @@ def add_list(request):
 
 # Post request must contain request.POST['name'] with the list name to be deleted
 def delete_list(request):
-    print('\n\n\nIt got here\n\n\n')
     response = AJAX_checking(request, 'list')
-    print(response)
-    print(request.POST)
     # In case of error
     if response.status_code != 200:
         return response 
@@ -76,10 +73,6 @@ def add_task(request):
         task.save()
         return response 
     except Exception as inst:
-        print(type(inst))
-        print(inst)
-        print(inst.args)
-        print(Exception)
         return HttpResponse(content = "Adding task to the db raised an Exception", status = 500)
 
 # Post request must contain request.POST['task'] and request.POST['parent_list'] with the 

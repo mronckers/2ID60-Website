@@ -3,7 +3,7 @@
 {% block content %}
     {% for list in lists %}
     <div class="col-xs-12 col-sm-4">
-        <div class="card" id= "test">
+        <div class="card" id= {{list.name}}>
             <div class="card-header">
               {{ list.name }}
               <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
@@ -14,7 +14,7 @@
               <ul class="list-group list-group-flush" id="newList">
                 {% for task in tasks %}
                   {% ifequal task.parent_list list %}
-                <li class="list-group-item" id="todo"> {{task.content}}
+                <li class="list-group-item" id={{task.content}}> {{task.content}}
                 <a href="" class="check-mark">
                   <span class="float-right fas fa-check"></span>
                 </a></li>

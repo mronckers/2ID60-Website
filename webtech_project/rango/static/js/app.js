@@ -16,8 +16,10 @@ $(document).on('ready', function() {
   let addList = function(list) {
     if (list) {
       let listGood = list.replace("'","").replace(";","").replace(/\s+/g,"");
-      listArray.push(listGood);
-      save();
+      
+      /*CHECK*/
+      /*listArray.push(listGood);
+      save();*/
       drawList(listGood);
 
       $('.openBody').hide();
@@ -68,11 +70,12 @@ $(document).on('ready', function() {
     if (todo) {
       let listGood = list.replace("'","").replace(";","").replace(/\s+/g, "");
       let todoGood = todo.replace("'","").replace(";","");
-
-      newTodo = new ToDo(todoGood, listGood);
+      
+      /*CHECK*/
+      /*newTodo = new ToDo(todoGood, listGood);
       toDoArray.push(newTodo);
-      save();
-
+      save();*/
+      
       drawToDo(todoGood, listGood);
 
       $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
@@ -247,12 +250,13 @@ $(document).on('ready', function() {
   //deletes the list from the html and storage
   let deleteList = function(card) {
     $(card).parents('.col-xs-12').remove();
-    for (let i=0; i < listArray.length; i++) {
+    /* CHECK*/
+    /*for (let i=0; i < listArray.length; i++) {
       if (listArray[i] === $(card).parents('.card').attr('id')) {
         listArray.splice(i,1);
         save();
       };
-    };
+    };*/
   }
 
   //handles the plus button to open the body of the card
@@ -278,12 +282,15 @@ $(document).on('ready', function() {
     let content = $(this).parents('.list-group-item').attr('id');
      
     $(this).parents('.list-group-item').remove();
-    for (let i=0; i < toDoArray.length; i++) {
+    
+    
+    /* CHECK */ 
+    /*for (let i=0; i < toDoArray.length; i++) {
       if (toDoArray[i].todoAttr === $(this).parents('.list-group-item').attr('id')) {
         toDoArray.splice(i,1);
         save();
       };
-    };
+    };*/
 
     /* update db */
     modifyTaskAJAX(content, parent_list, '/delete_task/')
@@ -311,6 +318,7 @@ $(document).on('ready', function() {
       e.preventDefault();
       let todo = $(this).val().trim();
       let list = $(this).parents('.card').attr('id');
+      console.log(list)
       let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim(); 
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
@@ -343,17 +351,17 @@ $(document).on('ready', function() {
   //draws the lists that are in the local storage of the browser
   let showLists = function() {
     let storedLists = JSON.parse(localStorage.getItem("toDoLists"));
-    for (let i=0; i < storedLists.length; i++) {
+    /*for (let i=0; i < storedLists.length; i++) {
       drawList(storedLists[i]);
-    };
+    };*/
   };
 
   //draws the todos that are in the local storage of the browser
   let showToDos = function() {
     let storedToDos = JSON.parse(localStorage.getItem("TODOS"));
-    for (let i=0; i < storedToDos.length; i++) {
+    /*for (let i=0; i < storedToDos.length; i++) {
       drawToDo(storedToDos[i].todoAttr, storedToDos[i].listAttr);
-    };
+    };*/
   };
 
   //save the updated arrays to local storage
