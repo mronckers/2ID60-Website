@@ -14,7 +14,7 @@ def list(request):
         return render(request, 'rango/list.html', {'lists': lists, 'tasks': tasks, 'name' : user.first_name})
     # if not, redirect to login
     else :
-        return render(request, 'registration/login.html')
+        return render(request, 'rango/login.html')
 
 def signup(request):
     form = SignUpForm()
