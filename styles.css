@@ -384,3 +384,18 @@ hr {
   from {transform: scale(0)}
   to {transform: scale(1)}
 }
+
+
+
+.ist_button_google {
+
+    background-color: white;
+    color: black;
+    padding: 14px 20px;
+    margin: 10px;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+    position: relative;
+
+}
