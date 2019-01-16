@@ -2,7 +2,8 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webtech_project.settings')
 import django
 django.setup()
-from rango.models import TodoList, User, Task
+from rango.models import TodoList, Task
+from django.contrib.auth.models import User 
 
 def populate():
     tasks1 = ["I have to do this",
@@ -22,17 +23,14 @@ def populate():
             {"name":"Mieke", "email":"mieke.ronckers@gmail.com", "lists":lists2}]
 
 
+    u = User.objects.filter(first_name='Lucia')
+    u = u[0]
     for user in users:
-        u = add_user(user["name"], user["email"])
         for todo_list in user["lists"]:
             l = add_list(u, todo_list["name"], todo_list["colour"])
             for task in todo_list["tasks"]:
                 add_task(l, task)
 
-def add_user(name, email):
-    u = User.objects.get_or_create(name = name, email = email)[0]
-    u.save()
-    return u
 
 def add_list(owner, name = "", colour = "white"):
     l = TodoList.objects.get_or_create(name = name, colour = colour, owner = owner)[0]
