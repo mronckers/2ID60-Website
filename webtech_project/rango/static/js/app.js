@@ -9,7 +9,7 @@ $(document).on('ready', function() {
   };
 
   // Get the modal
-  var modal1 = document.getElementById('id01');
+  //var modal1 = document.getElementById('id01');
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
@@ -18,7 +18,7 @@ $(document).on('ready', function() {
       }
   }
 
-  var modal2 = document.getElementById('id02');
+  //var modal2 = document.getElementById('id02');
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {

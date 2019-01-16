@@ -17,8 +17,7 @@ def list(request):
         return render(request, 'rango/login.html')
 
 def signup(request):
-    form = SignUpForm()
-    return render(request, 'rango/signup.html', {'form': form})
+    return render(request, 'rango/signup.html')
 
 
 
