@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from .models import TodoList, Task 
+from .models import TodoList, Task
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+
 def base(request):
     return render(request, 'rango/base.html', {})
 def list(request):
@@ -14,6 +15,10 @@ def list(request):
     # if not, redirect to login
     else :
         return render(request, 'registration/login.html')
+
+def signup(request):
+    form = SignUpForm()
+    return render(request, 'rango/signup.html', {'form': form})
 
 
 
@@ -37,12 +42,12 @@ def add_list(request):
     response = AJAX_checking(request, 'list')
     # In case of error
     if response.status_code != 200:
-        return response 
+        return response
     # If not, try to access db
     try:
         l = TodoList.objects.get_or_create(name = request.POST['name'], colour = "white", owner = request.user)[0]
         l.save()
-        return response 
+        return response
     except:
         return HttpResponse(content = "Saving list at the db raised an Exception", status = 500)
 
@@ -51,44 +56,42 @@ def delete_list(request):
     response = AJAX_checking(request, 'list')
     # In case of error
     if response.status_code != 200:
-        return response 
+        return response
     # If not, try to access db
     try:
         l = TodoList.objects.get(name = request.POST['name'], owner = request.user).delete()
-        return response 
+        return response
     except:
         return HttpResponse(content = "Deleting list from the db raised an Exception", status = 500)
 
-# Post request must contain request.POST['task'] and request.POST['parent_list'] with the 
+# Post request must contain request.POST['task'] and request.POST['parent_list'] with the
 # content of the task to be added and the name of the list containing the task
 def add_task(request):
     response = AJAX_checking(request, 'task')
     # In case of error
     if response.status_code != 200:
-        return response 
+        return response
     # If not, try to access db
     try:
         parent = TodoList.objects.get(name = request.POST['parent_list'], owner = request.user)
         task = Task.objects.get_or_create(content = request.POST['name'], parent_list = parent)[0]
         task.save()
-        return response 
+        return response
     except Exception as inst:
         return HttpResponse(content = "Adding task to the db raised an Exception", status = 500)
 
-# Post request must contain request.POST['task'] and request.POST['parent_list'] with the 
+# Post request must contain request.POST['task'] and request.POST['parent_list'] with the
 # content of the task to be deleted and the name of the list containing the task
 def delete_task(request):
     response = AJAX_checking(request, 'task')
     # In case of error
     if response.status_code != 200:
-        return response 
+        return response
     # If not, try to access db
     try:
         parent = TodoList.objects.get(name = request.POST['parent_list'], owner = request.user)
         tasks = Task.objects.filter(content = request.POST['name'], parent_list = parent)
         tasks.delete()
-        return response 
+        return response
     except:
         return HttpResponse(content = "Deleting task from the db raised an Exception", status = 500)
-
-        

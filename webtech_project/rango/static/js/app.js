@@ -8,6 +8,25 @@ $(document).on('ready', function() {
     this.listAttr = list;
   };
 
+  // Get the modal
+  var modal1 = document.getElementById('id01');
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal1) {
+        modal1.style.display = "none";
+      }
+  }
+
+  var modal2 = document.getElementById('id02');
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal2) {
+      modal2.style.display = "none";
+    }
+  }
+
 
   /* --------------------------------------------------------------------------
   Functions for adding lists to the main container
@@ -15,12 +34,11 @@ $(document).on('ready', function() {
   //adds the lists to the arrays for storage later on
   let addList = function(list) {
     if (list) {
-      let listGood = list.replace("'","").replace(";","").replace(/\s+/g,"");
-      
+
       /*CHECK*/
       /*listArray.push(listGood);
       save();*/
-      drawList(listGood);
+      drawList(list);
 
       $('.openBody').hide();
       $('.form-group').hide();
@@ -70,12 +88,12 @@ $(document).on('ready', function() {
     if (todo) {
       let listGood = list.replace("'","").replace(";","").replace(/\s+/g, "");
       let todoGood = todo.replace("'","").replace(";","");
-      
+
       /*CHECK*/
       /*newTodo = new ToDo(todoGood, listGood);
       toDoArray.push(newTodo);
       save();*/
-      
+
       drawToDo(todoGood, listGood);
 
       $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
@@ -138,14 +156,14 @@ $(document).on('ready', function() {
         error : function (jqXHR, textStatus){
           console.log('Error on AJAX post:', textStatus);
         }
-    });  
-  
+    });
+
   }
   /*Sends post to reques modification of list*/
   function modifyListAJAX(listName, url){
     modifyAJAX({'name': listName}, url);
   }
-  
+
   function modifyTaskAJAX(content, parent_list, url){
     modifyAJAX({'name': content, 'parent_list': parent_list}, url);
   }
@@ -172,18 +190,19 @@ $(document).on('ready', function() {
   $(document).on('click', '#addList', function(e) {
     e.preventDefault();
     let listName = $('#inputListName').val().trim();
+    let listGood = listName.replace("'","_").replace(";","_").replace(/\s+/g,"_");
     //hide explanation if first list is added
-    if ($('.row').is(':empty') && listName) {
+    if ($('.row').is(':empty') && listGood) {
         $('#explanation').hide();
     };
 
-    addList(listName); 
+    addList(listGood);
     $('#inputFormList').slideToggle('fast');
     $('#inputListName').val('');
-    
+
     /*Store at db*/
-    modifyListAJAX(listName,'/add_list/');
-    
+    modifyListAJAX(listGood,'/add_list/');
+
   });
 
   //handles the key "enter" after typing the list-name
@@ -191,18 +210,19 @@ $(document).on('ready', function() {
     if (e.which === 13) {
       e.preventDefault();
       let listName = $('#inputListName').val().trim();
+      let listGood = listName.replace("'","_").replace(";","_").replace(/\s+/g,"_");
 
       //hide explanation if first list is added
-      if ($('.row').is(':empty') && listName) {
+      if ($('.row').is(':empty') && listGood) {
           $('#explanation').hide();
       };
 
-      addList(listName);
+      addList(listGood);
       $('#inputFormList').slideToggle('fast');
       $(this).val('');
-      
+
       /*Store at db*/
-      modifyListAJAX(listName, '/add_list/');
+      modifyListAJAX(listGood, '/add_list/');
 
     }
   });
@@ -233,7 +253,7 @@ $(document).on('ready', function() {
       deleteList(card);
       $('#myModal').hide();
       /*Delete at db*/
-      let listName = $(card).parents('.card-header').text().replace(/\n/g, '').trim()
+      let listName = $(card).parents('.card-header').text().trim()
       modifyListAJAX(listName, '/delete_list/');
     };
 
@@ -280,11 +300,11 @@ $(document).on('ready', function() {
     e.preventDefault();
     let parent_list = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim();
     let content = $(this).parents('.list-group-item').attr('id');
-     
+
     $(this).parents('.list-group-item').remove();
-    
-    
-    /* CHECK */ 
+
+
+    /* CHECK */
     /*for (let i=0; i < toDoArray.length; i++) {
       if (toDoArray[i].todoAttr === $(this).parents('.list-group-item').attr('id')) {
         toDoArray.splice(i,1);
@@ -302,14 +322,14 @@ $(document).on('ready', function() {
       e.preventDefault();
       let todo = $(this).siblings('.form-control').val();
       let list = $(this).parents('.card').attr('id');
-      let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim(); 
+      let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim();
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
       $(this).parents('.form-group').siblings('.addToDo').toggle();
 
       /* Save task to the db*/
       modifyTaskAJAX(todo, listName, '/add_task/');
-      
+
   });
 
   //handles pressing enter for adding items to the current list
@@ -319,11 +339,11 @@ $(document).on('ready', function() {
       let todo = $(this).val().trim();
       let list = $(this).parents('.card').attr('id');
       console.log(list)
-      let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim(); 
+      let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim();
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
       $(this).parents('.form-group').siblings('.addToDo').toggle();
-      
+
       /* Save task to the db*/
       modifyTaskAJAX(todo, listName, '/add_task/');
     }
@@ -385,7 +405,7 @@ $(document).on('ready', function() {
   };
 
   $('#explanation').hide();
-  
+
   //show explanation only if there are no lists shown
   if ($('.row').is(':empty')) {
     $('#explanation').show();
