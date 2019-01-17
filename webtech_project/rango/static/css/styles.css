@@ -270,7 +270,7 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 /* The Modal (background) */
-.modal {
+#id01 #id02 {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
