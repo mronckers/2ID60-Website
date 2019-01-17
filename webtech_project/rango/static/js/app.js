@@ -9,7 +9,7 @@ $(document).on('ready', function() {
   };
 
   // Get the modal
-  //var modal1 = document.getElementById('id01');
+  var modal1 = document.getElementById('id01');
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
@@ -18,7 +18,7 @@ $(document).on('ready', function() {
       }
   }
 
-  //var modal2 = document.getElementById('id02');
+  var modal2 = document.getElementById('id02');
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
@@ -192,7 +192,7 @@ $(document).on('ready', function() {
     let listGood = listName.replace("'","_").replace(";","_").replace(/\s+/g,"_");
     //hide explanation if first list is added
     if ($('.row').is(':empty') && listGood) {
-        $('#explanation').hide();
+        //$('#explanation').hide();
     };
 
     addList(listGood);
@@ -213,7 +213,7 @@ $(document).on('ready', function() {
 
       //hide explanation if first list is added
       if ($('.row').is(':empty') && listGood) {
-          $('#explanation').hide();
+          //$('#explanation').hide();
       };
 
       addList(listGood);
@@ -403,13 +403,13 @@ $(document).on('ready', function() {
     };
   };
 
-  $('#explanation').hide();
+  $('#explanation').show();
 
   //show explanation only if there are no lists shown
   if ($('.row').is(':empty')) {
-    $('#explanation').show();
+    //$('#explanation').show();
   } else {
-    $('#explanation').hide();
+    //$('#explanation').hide();
   };
 
   $('.openBody').hide();

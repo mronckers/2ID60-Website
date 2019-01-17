@@ -75,6 +75,7 @@ Styling of container of the cards
   display: table-cell;
   padding: 1em;
   text-align: center;
+  width: 100%;
 }
 
 h1.heading {
@@ -233,7 +234,7 @@ input[type=text]:focus, input[type=password]:focus {
   background-color: #50a1af;
   color: white;
   padding: 14px 20px;
-  margin: 8px 0px;
+  margin: 0px 0px;
   cursor: pointer;
   width: 50%;
   opacity: 0.9;

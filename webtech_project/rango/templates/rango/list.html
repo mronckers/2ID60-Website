@@ -1,40 +1,74 @@
 {% extends 'rango/base.html' %}
 
 {% block content %}
-    {% for list in lists %}
-    <div class="col-xs-12 col-sm-4">
-        <div class="card" id= {{list.name}}>
-            <div class="card-header">
-              {{ list.name }}
-              <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
-              <a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>
-              <a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>
-            </div>
-            <div class="card-body text-left" id="card-body">
-              <ul class="list-group list-group-flush" id="newList">
-                {% for task in tasks %}
-                  {% ifequal task.parent_list list %}
-                <li class="list-group-item" id={{task.content}}> {{task.content}}
-                <a href="" class="check-mark">
-                  <span class="float-right fas fa-check"></span>
-                </a></li>
-                  {% endifequal %}
-                {% endfor %}
-              </ul>
-            </div>
-            <div class="card-add-more">
-              <form class="form-group">
-                  <div class="input-group">
-                      <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
-                      <a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>
-                      <a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>
-                  </div>
-              </form>
-                <button class="btn btn-block addToDo">
-                    Add to-do
-                </button>
-            </div>
-        </div>
+  <div>
+    <h1 class="heading">
+        To-do lists
+    </h1>
+  </div>
+
+<!-- Explanation of how the website works for "novice" users -->
+  {% if not lists.all %}
+    <p>testtesttest</p>
+    <div id="explanation">
+      <p>
+        This is a website to create to-do lists. You can sort your to-dos
+        by adding them to different lists. This will help you to get a good
+        overview of the different kind of tasks you still have to do.
+        <br>
+        <br>You have not added any to-do lists yet. To add a list click 'Add list<span class="fas fa-plus"></span>' in the top right.
+        <br>Insert a name for your list and click <span class="fas fa-plus"></span> next to it.
+        <br>To-do's can be added to the list by clicking 'Add to-do' in the specific list it belongs to.
+        <br> If you have finished a to-do, click on the check-mark <span class="fas fa-check"></span> and the to-do will be deleted.
+        <br> If you have finished the whole list, click the trash can <span class="fas fa-trash-alt"></span> and the list will be deleted.
+      </p>
     </div>
-    {% endfor %}
+  {% endif %}
+
+<!-- Empty container for the cards of lists and to-dos
+    Cards will be added inside the "row" class -->
+  <div class="content">
+      <div class="container">
+          <div class="row">
+
+            {% for list in lists %}
+            <div class="col-xs-12 col-sm-4">
+                <div class="card" id= {{list.name}}>
+                    <div class="card-header">
+                      {{ list.name }}
+                      <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
+                      <a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>
+                      <a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>
+                    </div>
+                    <div class="card-body text-left" id="card-body">
+                      <ul class="list-group list-group-flush" id="newList">
+                        {% for task in tasks %}
+                          {% ifequal task.parent_list list %}
+                        <li class="list-group-item" id={{task.content}}> {{task.content}}
+                        <a href="" class="check-mark">
+                          <span class="float-right fas fa-check"></span>
+                        </a></li>
+                          {% endifequal %}
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    <div class="card-add-more">
+                      <form class="form-group">
+                          <div class="input-group">
+                              <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
+                              <a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>
+                              <a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>
+                          </div>
+                      </form>
+                        <button class="btn btn-block addToDo">
+                            Add to-do
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
 {% endblock content %}
