@@ -3,16 +3,17 @@
 {% block login %}
 <div id="id02">
     <!-- Modal Content -->
+    <a href="{% url 'social:begin' 'google-oauth2' %}"><button class="ist_button_google">
+        <img width="16" height="16" src="https://d3ptyyxy2at9ui.cloudfront.net/google-41de20.svg">
+        Log in with Google Account
+    </button></a>
   <form class="modal-content">
     <a href="{% url 'list' %}"><span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span></a>
     <div class="container">
       <h1>Login</h1>
       <p>Please fill in this form to log into an account.</p>
       <hr>
-      <button href="{% url 'social:begin' 'google-oauth2' %}" class="ist_button_google">
-          <img width="16" height="16" src="https://d3ptyyxy2at9ui.cloudfront.net/google-41de20.svg">
-          Log in with Google Account
-      </button>
+
       <hr>
       <label for="uname"><b>Username</b></label>
       <input type="text" placeholder="Enter Username" name="uname" required>
