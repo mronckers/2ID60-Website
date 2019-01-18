@@ -16,8 +16,10 @@ $(document).on('ready', function() {
   let addList = function(list) {
     if (list) {
       let listGood = list.replace("'","").replace(";","").replace(/\s+/g,"");
-      listArray.push(listGood);
-      save();
+      
+      /*CHECK*/
+      /*listArray.push(listGood);
+      save();*/
       drawList(listGood);
 
       $('.openBody').hide();
@@ -68,11 +70,12 @@ $(document).on('ready', function() {
     if (todo) {
       let listGood = list.replace("'","").replace(";","").replace(/\s+/g, "");
       let todoGood = todo.replace("'","").replace(";","");
-
-      newTodo = new ToDo(todoGood, listGood);
+      
+      /*CHECK*/
+      /*newTodo = new ToDo(todoGood, listGood);
       toDoArray.push(newTodo);
-      save();
-
+      save();*/
+      
       drawToDo(todoGood, listGood);
 
       $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
@@ -92,8 +95,60 @@ $(document).on('ready', function() {
     $('#'+list).children('.card-body').children('.list-group').append(addition);
   };
 
+/*------------------------------------------------------*/
+/*-------------- Functions for the AJAX posts ----------*/
+/*------------------------------------------------------*/
 
+  /* Function to get csrf token */
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
 
+  /* Sends POST request to url with data.
+   * In the case of List, data is the name of the list,
+   * I the case of Task, the content (named 'name' and not 'content', sorry for that)
+   * and the parent list name
+   */
+  function modifyAJAX(data, url){
+    var csrf_token = getCookie('csrftoken');
+    $.ajax({
+        url: url,
+        data: data,
+        type: 'POST',
+        dataType : 'text',
+        headers: {'X-CSRFToken': csrf_token },
+        success: function (data, textStatus, jqXHR) {
+          /*TODO This should be notified to the user via pop up I guess*/
+          if(jqXHR.status != 200){
+            console.log('Error on db access ', jqXHR.status);
+          }
+        },
+        error : function (jqXHR, textStatus){
+          console.log('Error on AJAX post:', textStatus);
+        }
+    });  
+  
+  }
+  /*Sends post to reques modification of list*/
+  function modifyListAJAX(listName, url){
+    modifyAJAX({'name': listName}, url);
+  }
+  
+  function modifyTaskAJAX(content, parent_list, url){
+    modifyAJAX({'name': content, 'parent_list': parent_list}, url);
+  }
   /*----------------------------------------------------------------------------
   All functions that handle user interaction
   ----------------------------------------------------------------------------*/
@@ -117,15 +172,18 @@ $(document).on('ready', function() {
   $(document).on('click', '#addList', function(e) {
     e.preventDefault();
     let listName = $('#inputListName').val().trim();
-
     //hide explanation if first list is added
     if ($('.row').is(':empty') && listName) {
-        $('#explanation').slideUp('slow');
+        $('#explanation').hide();
     };
 
-    addList(listName);
+    addList(listName); 
     $('#inputFormList').slideToggle('fast');
     $('#inputListName').val('');
+    
+    /*Store at db*/
+    modifyListAJAX(listName,'/add_list/');
+    
   });
 
   //handles the key "enter" after typing the list-name
@@ -136,12 +194,16 @@ $(document).on('ready', function() {
 
       //hide explanation if first list is added
       if ($('.row').is(':empty') && listName) {
-          $('#explanation').slideUp('slow');
+          $('#explanation').hide();
       };
 
       addList(listName);
       $('#inputFormList').slideToggle('fast');
       $(this).val('');
+      
+      /*Store at db*/
+      modifyListAJAX(listName, '/add_list/');
+
     }
   });
 
@@ -170,6 +232,9 @@ $(document).on('ready', function() {
     ok.onclick = function() {
       deleteList(card);
       $('#myModal').hide();
+      /*Delete at db*/
+      let listName = $(card).parents('.card-header').text().replace(/\n/g, '').trim()
+      modifyListAJAX(listName, '/delete_list/');
     };
 
     cancel.onclick = function() {
@@ -185,12 +250,13 @@ $(document).on('ready', function() {
   //deletes the list from the html and storage
   let deleteList = function(card) {
     $(card).parents('.col-xs-12').remove();
-    for (let i=0; i < listArray.length; i++) {
+    /* CHECK*/
+    /*for (let i=0; i < listArray.length; i++) {
       if (listArray[i] === $(card).parents('.card').attr('id')) {
         listArray.splice(i,1);
         save();
       };
-    };
+    };*/
   }
 
   //handles the plus button to open the body of the card
@@ -212,23 +278,38 @@ $(document).on('ready', function() {
   //handles the check-mark to delete the particular todo
   $(document).on('click', '.check-mark', function(e) {
     e.preventDefault();
+    let parent_list = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim();
+    let content = $(this).parents('.list-group-item').attr('id');
+     
     $(this).parents('.list-group-item').remove();
-    for (let i=0; i < toDoArray.length; i++) {
+    
+    
+    /* CHECK */ 
+    /*for (let i=0; i < toDoArray.length; i++) {
       if (toDoArray[i].todoAttr === $(this).parents('.list-group-item').attr('id')) {
         toDoArray.splice(i,1);
         save();
       };
-    };
+    };*/
+
+    /* update db */
+    modifyTaskAJAX(content, parent_list, '/delete_task/')
+
   });
 
   //handles mouse click on plus button for adding items to the current list
   $(document).on('click', '.addItem', function (e) {
       e.preventDefault();
-      let todo = $(this).siblings('.form-control').val().trim();
+      let todo = $(this).siblings('.form-control').val();
       let list = $(this).parents('.card').attr('id');
+      let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim(); 
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
       $(this).parents('.form-group').siblings('.addToDo').toggle();
+
+      /* Save task to the db*/
+      modifyTaskAJAX(todo, listName, '/add_task/');
+      
   });
 
   //handles pressing enter for adding items to the current list
@@ -237,9 +318,14 @@ $(document).on('ready', function() {
       e.preventDefault();
       let todo = $(this).val().trim();
       let list = $(this).parents('.card').attr('id');
+      console.log(list)
+      let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim(); 
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
       $(this).parents('.form-group').siblings('.addToDo').toggle();
+      
+      /* Save task to the db*/
+      modifyTaskAJAX(todo, listName, '/add_task/');
     }
   });
 
@@ -265,17 +351,17 @@ $(document).on('ready', function() {
   //draws the lists that are in the local storage of the browser
   let showLists = function() {
     let storedLists = JSON.parse(localStorage.getItem("toDoLists"));
-    for (let i=0; i < storedLists.length; i++) {
+    /*for (let i=0; i < storedLists.length; i++) {
       drawList(storedLists[i]);
-    };
+    };*/
   };
 
   //draws the todos that are in the local storage of the browser
   let showToDos = function() {
     let storedToDos = JSON.parse(localStorage.getItem("TODOS"));
-    for (let i=0; i < storedToDos.length; i++) {
+    /*for (let i=0; i < storedToDos.length; i++) {
       drawToDo(storedToDos[i].todoAttr, storedToDos[i].listAttr);
-    };
+    };*/
   };
 
   //save the updated arrays to local storage
@@ -298,11 +384,13 @@ $(document).on('ready', function() {
     };
   };
 
+  $('#explanation').hide();
+  
   //show explanation only if there are no lists shown
   if ($('.row').is(':empty')) {
     $('#explanation').show();
   } else {
-    $('#explanation').slideUp('slow');
+    $('#explanation').hide();
   };
 
   $('.openBody').hide();
