@@ -5,8 +5,8 @@
  ------------------------------------*/
 html,
 body {
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
+  /*-moz-box-sizing: border-box;
+       box-sizing: border-box;*/
   height: 100%;
   width: 100%;
   background: #FFF;
@@ -67,7 +67,6 @@ Styling of container of the cards
 ------------------------------------------*/
 .wrapper {
   display: table;
-  height: 100%;
   width: 100%;
 }
 

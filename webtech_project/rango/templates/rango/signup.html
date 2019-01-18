@@ -2,19 +2,21 @@
 
 {% block signup %}
 <div id="id01">
-  <a href="{% url 'social:begin' 'google-oauth2' %}"><button  class="ist_button_google">
-      <img width="16" height="16" src="https://d3ptyyxy2at9ui.cloudfront.net/google-41de20.svg">
-      Sign up with Google Account
-  </button></a>
-  <form class="modal-content">
+
+  <div class="modal-content"
+
     <a href="{% url 'list' %}"<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span></a>
     <div class="container">
 
   <h1>Sign Up</h1>
   <p>Please fill in this form to create an account.</p>
   <hr>
-
-<hr>
+  <a href="{% url 'social:begin' 'google-oauth2' %}"><button  class="ist_button_google">
+      <img width="16" height="16" src="https://d3ptyyxy2at9ui.cloudfront.net/google-41de20.svg">
+      Sign up with Google Account
+  </button></a>
+  <hr>
+  <form>
   <label for="email"><b>Email</b></label>
   <input type="text" placeholder="Enter Email" name="email" required>
 
@@ -34,8 +36,10 @@
     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
     <a href="{% url 'list' %}"><button class="userbutton" type="submit" class="signup">Sign Up</button></a>
   </div>
+  </form>
 </div>
-</form>
+
+</div>
 </div>
 
 
