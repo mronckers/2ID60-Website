@@ -31,4 +31,6 @@ urlpatterns = [
     url(r'^delete_list/', views.delete_list, name = 'delete_list'),
     url(r'^add_task/', views.add_task, name = 'add_task'),
     url(r'^delete_task', views.delete_task, name = 'delete_task'),
-]
+    url(r'^search_list', views.search_list, name = 'search_list' ),
+    url(r'^toggle_open_status', views.toggle_open_status, name = 'toggle_open_status')
+    ]

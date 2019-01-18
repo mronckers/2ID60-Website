@@ -116,12 +116,20 @@ $(document).on('ready', function() {
     return cookieValue;
   }
 
+  /* Short function for managing default success behaviour after $.ajax() */
+  function onSuccessAJAX(data, textStatus, jqXHR) {
+          /*TODO This should be notified to the user via pop up I guess*/
+          if(jqXHR.status != 200){
+            console.log('Error on db access ', jqXHR.status);
+          }
+  }
+
   /* Sends POST request to url with data.
    * In the case of List, data is the name of the list,
    * I the case of Task, the content (named 'name' and not 'content', sorry for that)
    * and the parent list name
    */
-  function modifyAJAX(data, url){
+  function modifyAJAX(data, url, on_success = onSuccess){
     var csrf_token = getCookie('csrftoken');
     $.ajax({
         url: url,
@@ -129,12 +137,7 @@ $(document).on('ready', function() {
         type: 'POST',
         dataType : 'text',
         headers: {'X-CSRFToken': csrf_token },
-        success: function (data, textStatus, jqXHR) {
-          /*TODO This should be notified to the user via pop up I guess*/
-          if(jqXHR.status != 200){
-            console.log('Error on db access ', jqXHR.status);
-          }
-        },
+        success: on_success,
         error : function (jqXHR, textStatus){
           console.log('Error on AJAX post:', textStatus);
         }
@@ -146,9 +149,30 @@ $(document).on('ready', function() {
     modifyAJAX({'name': listName}, url);
   }
   
+  /*Sends post to request modification of task*/
   function modifyTaskAJAX(content, parent_list, url){
     modifyAJAX({'name': content, 'parent_list': parent_list}, url);
   }
+
+  /*Sends post to request open_status toggling for lists*/
+  function toggleOpenStatusAJAX(listName){
+    modifyAJAX({}, '/toggle_open_status/')
+  }
+
+  /*Sends post to request search of list*/
+  function searchListAJAX(string){
+    return modifyAJAX({'string' : string}, '/search_list/', searchOnSuccess)
+  }
+  
+  /* TODO a function here should be created to determine what
+   * modifyAJAX does on success. 
+   * In this case, it would be fetching the returned json 
+   * and changing the html as needed*/
+  function searchOnSuccess(data, textStatus, jqXHR){
+    let do_something;
+  }
+
+
   /*----------------------------------------------------------------------------
   All functions that handle user interaction
   ----------------------------------------------------------------------------*/
@@ -265,6 +289,9 @@ $(document).on('ready', function() {
     $(this).toggle();
     $(this).siblings('.closeBody').toggle();
     $(this).parents('.card').children('.card-body').slideToggle('fast');
+    /* Change open_status of list at the db*/
+    let listName; /*TODO */
+    toggleOpenStatusAJAX(listName);
   });
 
   //handles the minus button to close the body of the card
@@ -273,6 +300,9 @@ $(document).on('ready', function() {
     $(this).toggle();
     $(this).siblings('.openBody').toggle();
     $(this).parents('.card').children('.card-body').slideToggle('fast');
+    /* Change open_status of list at the db*/
+    let listName; /*TODO */
+    toggleOpenStatusAJAX(listName);  
   });
 
   //handles the check-mark to delete the particular todo
