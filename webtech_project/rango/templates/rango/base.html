@@ -52,7 +52,7 @@
     <div class="bg-light" id="userFunctionality">
       <a href="{% url 'signup' %}"><button class="Ubutton">Sign Up</button></a>
       <a href="{% url 'login' %}"><button class="Ubutton">Login</button></a>
-      <a href=""><button class="Ubutton">Logout</button></a>
+      <button class="Ubutton" onclick="document.getElementById('popUpLogOut').style.display='block'">Logout</button>
     </div>
 
     <!-- The Modal (contains the Sign Up form) -->
@@ -72,7 +72,7 @@
       </div>
   </section>
 
-  <!-- Pop up for deleting  -->
+  <!-- Pop up for deleting list -->
   <div class="modal" id="myModal">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -98,6 +98,30 @@
     </div>
   </div>
 
+  <div class="modal" id="popUpLogOut">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Log out?</h4>
+          <button type="button" class="close" onclick="document.getElementById('popUpLogOut').style.display='none'"id="closePopUpLogout">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          Are you sure you want to log out?
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <a href="{% url 'logout' %}"><button type="button" class="btn btn-success" id="OKLogout">OK</button></a>
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('popUpLogOut').style.display='none'">Cancel</button>
+        </div>
+
+      </div>
+    </div>
+    </div>
     <!-- JavaScript -->
     <!-- jQuery first, then Bootstrap JS, then "app.js" -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

@@ -8,25 +8,6 @@ $(document).on('ready', function() {
     this.listAttr = list;
   };
 
-  // Get the modal
-  var modal1 = document.getElementById('id01');
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal1) {
-        modal1.style.display = "none";
-      }
-  }
-
-  var modal2 = document.getElementById('id02');
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal2) {
-      modal2.style.display = "none";
-    }
-  }
-
   /* --------------------------------------------------------------------------
   Functions for adding lists to the main container
   ---------------------------------------------------------------------------*/
@@ -146,7 +127,7 @@ $(document).on('ready', function() {
    * I the case of Task, the content (named 'name' and not 'content', sorry for that)
    * and the parent list name
    */
-  function modifyAJAX(data, url, on_success = onSuccess){
+  function modifyAJAX(data, url, on_success = onSuccessAJAX){
     var csrf_token = getCookie('csrftoken');
     $.ajax({
         url: url,
@@ -203,7 +184,7 @@ $(document).on('ready', function() {
     $('#userFunctionality').slideToggle('fast');
   });
 
-  //handles clicking the button "Add list" to open the form for lists
+    //handles clicking the button "Add list" to open the form for lists
   $(document).on('click', '#openFormList', function(e) {
     e.preventDefault();
     $('#inputFormList').slideToggle('fast');

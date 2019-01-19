@@ -139,6 +139,7 @@ AUTHENTICATION_BACKENDS = (
 # URLs to redirect after authentication
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'list'
+LOGOUT_REDIRECT_URL = 'login'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '384754873963-s5jcrgfjrfeqqnkhbgccasln18p6guqo.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'aT3RjjDkJVixu8uceyd6pWCg' 
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'aT3RjjDkJVixu8uceyd6pWCg'
