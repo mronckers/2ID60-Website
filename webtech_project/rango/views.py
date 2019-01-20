@@ -36,8 +36,8 @@ def AJAX_checking(request, keys):
     for key in keys:
         if key not in request.POST.keys():
             return HttpResponse(content = "Malformed request", status = 400)
-    if list_or_task == 'task' and 'parent_list' not in request.POST.keys():
-        return HttpResponse(content = "Malformed request", status = 400)
+    #if list_or_task == 'task' and 'parent_list' not in request.POST.keys():
+    #    return HttpResponse(content = "Malformed request", status = 400)
     return HttpResponse(content_type = 'text/plain', status = 200)
 
 # Post request must contain request.POST['name'] with the list name to be added

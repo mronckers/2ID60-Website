@@ -229,10 +229,11 @@ $(document).on('ready', function() {
     e.preventDefault();
     let listName = $('#inputListName').val().trim();
     let listGood = listName.replace("'","_").replace(";","_").replace(/\s+/g,"_");
+
     //hide explanation if first list is added
-    if ($('.row').is(':empty') && listGood) {
-        //$('#explanation').hide();
-    };
+    //if ($('.row').is(':empty') && listGood) {
+        $('#explanation').hide();
+    //};
 
     addList(listGood);
     $('#inputFormList').slideToggle('fast');
@@ -250,10 +251,7 @@ $(document).on('ready', function() {
       let listName = $('#inputListName').val().trim();
       let listGood = listName.replace("'","_").replace(";","_").replace(/\s+/g,"_");
 
-      //hide explanation if first list is added
-      if ($('.row').is(':empty') && listGood) {
-          //$('#explanation').hide();
-      };
+      $('#explanation').hide();
 
       addList(listGood);
       $('#inputFormList').slideToggle('fast');
@@ -302,6 +300,7 @@ $(document).on('ready', function() {
     closePopUp.onclick = function() {
       $('#myModal').hide();
     };
+
 
   });
 
@@ -398,13 +397,6 @@ $(document).on('ready', function() {
   ----------------------------------------------------------------------------*/
 
   $('#explanation').show();
-
-  //show explanation only if there are no lists shown
-  if ($('.row').is(':empty')) {
-  //  $('#explanation').show();
-  } else {
-  //  $('#explanation').hide();
-  };
 
   $('.openBody').hide();
   $('.form-group').hide();

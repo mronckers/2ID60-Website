@@ -285,8 +285,6 @@ input[type=text]:focus, input[type=password]:focus {
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
@@ -299,8 +297,9 @@ hr {
 /* The Close Button (x) */
 .close {
   position: absolute;
-  right: 35px;
-  top: 15px;
+  float: right;
+  right: 5px;
+  top: 5px;
   font-size: 40px;
   font-weight: bold;
   color: #f1f1f1;
@@ -309,7 +308,6 @@ hr {
 .close:hover,
 .close:focus {
   color: #f44336;
-  cursor: pointer;
 }
 
 /* Clear floats */
@@ -340,38 +338,6 @@ hr {
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   padding-top: 60px;
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 5px auto; /* 15% from the top and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  /* Position it in the top right corner outside of the modal */
-  position: absolute;
-  right: 25px;
-  top: 0;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
-}
-
-/* Close button on hover */
-.close:hover,
-.close:focus {
-  color: red;
-  cursor: pointer;
-}
-
-/* Add Zoom Animation */
-.animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
 }
 
 @-webkit-keyframes animatezoom {
