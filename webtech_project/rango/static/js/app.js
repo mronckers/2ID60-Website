@@ -187,7 +187,7 @@ $(document).on('ready', function() {
   }
 
   /*Sends post to request open_status toggling for lists*/
-  /*function toggleOpenStatusAJAX(listName){
+  function toggleOpenStatusAJAX(listName){
     modifyAJAX({}, '/toggle_open_status/')
   }
 
@@ -316,7 +316,8 @@ $(document).on('ready', function() {
     $(this).siblings('.closeBody').toggle();
     $(this).parents('.card').children('.card-body').slideToggle('fast');
     /* Change open_status of list at the db*/
-    let listName; /*TODO */
+    let listName = $(this).parents('.card').attr('id')
+    console.log(listName);
     toggleOpenStatusAJAX(listName);
   });
 
@@ -327,7 +328,8 @@ $(document).on('ready', function() {
     $(this).siblings('.openBody').toggle();
     $(this).parents('.card').children('.card-body').slideToggle('fast');
     /* Change open_status of list at the db*/
-    let listName; /*TODO */
+    let listName = $(this).parents('.card').attr('id');
+    console.log(listName);
     toggleOpenStatusAJAX(listName);
   });
 

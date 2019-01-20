@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(),{'next_page': '/'}, name='logout'),
+    url(r'^signup/$', views.SignUp.as_view(), name='signup'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
     url(r'^add_list/', views.add_list, name = 'add_list'),
     url(r'^delete_list/', views.delete_list, name = 'delete_list'),

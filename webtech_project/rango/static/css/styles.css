@@ -31,9 +31,9 @@ body {
   color:#4ab279;
 }
 
-input, #newItemInput {
-  border: 1px solid #50a1af;
-  border-radius: 5px;
+#newItemInput, #inputListName {
+  border: 1px solid #50a1af !important;
+  border-radius: 5px !important;
 }
 
 /* -----------------------------------
@@ -156,20 +156,19 @@ h1.heading {
 }
 
 /* Style the search field */
-form.example input[type=text] {
+#searchInput {
   padding: 10px;
   font-size: 17px;
-  border: 1px solid grey;
+  border: 1px solid #50a1af;
+  border-radius: 5px;
   float: left;
   width: 80%;
-  background: #f1f1f1;
-
-
 }
 
 .Ubutton {
     background: #50a1af;
     color: white;
+    border-radius: 5px;
     border-left: none; /* Prevent double borders */
 }
 .Ubutton:hover {
@@ -185,6 +184,7 @@ form.example button {
   color: white;
   font-size: 17px;
   border: 1px solid grey;
+  border-radius: 5px;
   border-left: none; /* Prevent double borders */
   cursor: pointer;
 }
@@ -204,7 +204,7 @@ form.example::after {
 
 * {box-sizing: border-box}
 /* Full-width input fields */
-  input[type=text], input[type=password] {
+.loginInput {
   width: 100%;
 
   display: inline-block;
@@ -213,7 +213,7 @@ form.example::after {
 }
 
 /* Add a background color when the inputs get focus */
-input[type=text]:focus, input[type=password]:focus {
+.loginInput:focus {
   background-color: #ddd;
   outline: none;
 }

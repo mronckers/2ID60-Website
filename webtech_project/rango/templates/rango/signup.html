@@ -16,15 +16,18 @@
       Sign up with Google Account
   </button></a>
   <hr>
-  <form>
-  <label for="email"><b>Email</b></label>
-  <input type="text" placeholder="Enter Email" name="email" required>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  <!-- <label for="email"><b>Email</b></label>
+  <input type="text" class="loginInput" placeholder="Enter Email" name="email" required>
 
   <label for="psw"><b>Password</b></label>
-  <input type="password" placeholder="Enter Password" name="psw" required>
+  <input type="password" class="loginInput" placeholder="Enter Password" name="psw" required>
 
   <label for="psw-repeat"><b>Repeat Password</b></label>
-  <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+  <input type="password" class="loginInput" placeholder="Repeat Password" name="psw-repeat" required>
 
   <label>
     <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
@@ -36,6 +39,7 @@
     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
     <a href="{% url 'list' %}"><button class="userbutton" type="submit" class="signup">Sign Up</button></a>
   </div>
+  -->
   </form>
 </div>
 
