@@ -114,20 +114,54 @@ $(document).on('ready', function() {
     return cookieValue;
   }
 
-  /* Short function for managing default success behaviour after $.ajax() */
-  function onSuccessAJAX(data, textStatus, jqXHR) {
+  /* Sends POST request to url with data.
+   * In the case of List, data is the name of the list,
+   * I the case of Task, the content (named 'name' and not 'content', sorry for that)
+   * and the parent list name
+   */
+  function modifyAJAX(data, url){
+    var csrf_token = getCookie('csrftoken');
+    $.ajax({
+        url: url,
+        data: data,
+        type: 'POST',
+        dataType : 'text',
+        headers: {'X-CSRFToken': csrf_token },
+        success: function (data, textStatus, jqXHR) {
           /*TODO This should be notified to the user via pop up I guess*/
           if(jqXHR.status != 200){
             console.log('Error on db access ', jqXHR.status);
           }
+        },
+        error : function (jqXHR, textStatus){
+          console.log('Error on AJAX post:', textStatus);
+        }
+    });
+
   }
+  /*Sends post to reques modification of list*/
+  function modifyListAJAX(listName, url){
+    modifyAJAX({'name': listName}, url);
+  }
+
+  function modifyTaskAJAX(content, parent_list, url){
+    modifyAJAX({'name': content, 'parent_list': parent_list}, url);
+  }
+
+  /* Short function for managing default success behaviour after $.ajax() */
+ /*  function onSuccessAJAX(data, textStatus, jqXHR) {
+          /*TODO This should be notified to the user via pop up I guess*/
+          /*if(jqXHR.status != 200){
+            console.log('Error on db access ', jqXHR.status);
+          }
+  } */
 
   /* Sends POST request to url with data.
    * In the case of List, data is the name of the list,
    * I the case of Task, the content (named 'name' and not 'content', sorry for that)
    * and the parent list name
    */
-  function modifyAJAX(data, url, on_success = onSuccess){
+  /*function modifyAJAX(data, url, on_success = onSuccess){
     var csrf_token = getCookie('csrftoken');
     $.ajax({
         url: url,
@@ -143,22 +177,22 @@ $(document).on('ready', function() {
 
   }
   /*Sends post to reques modification of list*/
-  function modifyListAJAX(listName, url){
+  /*function modifyListAJAX(listName, url){
     modifyAJAX({'name': listName}, url);
   }
 
   /*Sends post to request modification of task*/
-  function modifyTaskAJAX(content, parent_list, url){
+  /*function modifyTaskAJAX(content, parent_list, url){
     modifyAJAX({'name': content, 'parent_list': parent_list}, url);
   }
 
   /*Sends post to request open_status toggling for lists*/
-  function toggleOpenStatusAJAX(listName){
+  /*function toggleOpenStatusAJAX(listName){
     modifyAJAX({}, '/toggle_open_status/')
   }
 
   /*Sends post to request search of list*/
-  function searchListAJAX(string){
+  /*function searchListAJAX(string){
     return modifyAJAX({'string' : string}, '/search_list/', searchOnSuccess)
   }
 
@@ -166,7 +200,7 @@ $(document).on('ready', function() {
    * modifyAJAX does on success.
    * In this case, it would be fetching the returned json
    * and changing the html as needed*/
-  function searchOnSuccess(data, textStatus, jqXHR){
+  /*function searchOnSuccess(data, textStatus, jqXHR){
     let do_something;
   }
 
@@ -367,9 +401,9 @@ $(document).on('ready', function() {
 
   //show explanation only if there are no lists shown
   if ($('.row').is(':empty')) {
-    $('#explanation').show();
+  //  $('#explanation').show();
   } else {
-    $('#explanation').hide();
+  //  $('#explanation').hide();
   };
 
   $('.openBody').hide();
