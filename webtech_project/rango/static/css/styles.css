@@ -39,8 +39,8 @@ body {
 /* -----------------------------------
  Styling of navbar
  -------------------------------------*/
-.navbar-light {
-  background-color: red;
+.nav-item, .navbar-brand{
+  font-size: 19px;
 }
 
 #inputFormList {
@@ -50,6 +50,27 @@ body {
 
 #userFunctionality {
   padding: 0px 20px 1px 20px;
+}
+
+/* Style the search field */
+#searchInput {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid #50a1af;
+  border-radius: 5px;
+  float: left;
+  width: 80%;
+}
+
+.Ubutton {
+    background: #50a1af;
+    color: white;
+    border-radius: 5px;
+    border-left: none; /* Prevent double borders */
+    margin-bottom: 20px;
+}
+.Ubutton:hover {
+  background: grey;
 }
 
 .modal-dialog {
@@ -148,32 +169,7 @@ h1.heading {
 
 /* --------- search bar ------------ */
 
-.topnav {
-  box-sizing: border-box;
-  margin: 0 auto;
-  width: 50%;
 
-}
-
-/* Style the search field */
-#searchInput {
-  padding: 10px;
-  font-size: 17px;
-  border: 1px solid #50a1af;
-  border-radius: 5px;
-  float: left;
-  width: 80%;
-}
-
-.Ubutton {
-    background: #50a1af;
-    color: white;
-    border-radius: 5px;
-    border-left: none; /* Prevent double borders */
-}
-.Ubutton:hover {
-  background: grey;
-}
 
 /* Style the submit button */
 form.example button {
