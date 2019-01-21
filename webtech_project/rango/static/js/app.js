@@ -139,23 +139,6 @@ $(document).on('ready', function() {
     });
 
   }
-  /*Sends post to reques modification of list*/
-  function modifyListAJAX(listName, url){
-    modifyAJAX({'name': listName}, url);
-  }
-
-  function modifyTaskAJAX(content, parent_list, url){
-    modifyAJAX({'name': content, 'parent_list': parent_list}, url);
-  }
-
-  /* Short function for managing default success behaviour after $.ajax() */
- /*  function onSuccessAJAX(data, textStatus, jqXHR) {
-          /*TODO This should be notified to the user via pop up I guess*/
-          /*if(jqXHR.status != 200){
-            console.log('Error on db access ', jqXHR.status);
-          }
-  } */
-
   /* Sends POST request to url with data.
    * In the case of List, data is the name of the list,
    * I the case of Task, the content (named 'name' and not 'content', sorry for that)
@@ -176,19 +159,29 @@ $(document).on('ready', function() {
     });
 
   }
+  /* Short function for managing default success behaviour after $.ajax() */
+ /*  function onSuccessAJAX(data, textStatus, jqXHR) {
+          /*TODO This should be notified to the user via pop up I guess*/
+          /*if(jqXHR.status != 200){
+            console.log('Error on db access ', jqXHR.status);
+          }
+  } */
+
+
   /*Sends post to reques modification of list*/
-  /*function modifyListAJAX(listName, url){
+  function modifyListAJAX(listName, url){
     modifyAJAX({'name': listName}, url);
   }
 
   /*Sends post to request modification of task*/
-  /*function modifyTaskAJAX(content, parent_list, url){
+  function modifyTaskAJAX(content, parent_list, url){
     modifyAJAX({'name': content, 'parent_list': parent_list}, url);
   }
 
+
   /*Sends post to request open_status toggling for lists*/
   function toggleOpenStatusAJAX(listName){
-    modifyAJAX({}, '/toggle_open_status/')
+    modifyAJAX({'name': listName}, '/toggle_open_status/')
   }
 
   /*Sends post to request search of list*/
@@ -230,10 +223,7 @@ $(document).on('ready', function() {
     let listName = $('#inputListName').val().trim();
     let listGood = listName.replace("'","_").replace(";","_").replace(/\s+/g,"_");
 
-    //hide explanation if first list is added
-    //if ($('.row').is(':empty') && listGood) {
-        $('#explanation').hide();
-    //};
+    $('#explanation').hide();
 
     addList(listGood);
     $('#inputFormList').slideToggle('fast');
@@ -400,7 +390,7 @@ $(document).on('ready', function() {
 
   $('#explanation').show();
 
-  $('.openBody').hide();
+  //$('.openBody').hide();
   $('.form-group').hide();
   $('#inputFormList').hide();
   $('#userFunctionality').hide();

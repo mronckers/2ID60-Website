@@ -183,7 +183,10 @@ def toggle_open_status(request):
     # If not, access db to toggle open_status of requested list
     try:
         todo_list = TodoList.objects.get(owner = request.user, name = request.POST['name'])
-        new_status = True if todo_list.open_status == False else True
+        if todo_list.open_status == True:
+            new_status = False
+        else:
+            new_status = True
         todo_list.open_status = new_status
         todo_list.save(update_fields = ['open_status'])
         return HttpResponse(content_type = 'text/plain', status = 200)
