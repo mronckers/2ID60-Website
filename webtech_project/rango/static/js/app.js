@@ -15,9 +15,6 @@ $(document).on('ready', function() {
   let addList = function(list) {
     if (list) {
 
-      /*CHECK*/
-      /*listArray.push(listGood);
-      save();*/
       drawList(list);
 
       $('.openBody').hide();
@@ -68,11 +65,6 @@ $(document).on('ready', function() {
     if (todo) {
       let listGood = list.replace("'","").replace(";","").replace(/\s+/g, "");
       let todoGood = todo.replace("'","").replace(";","");
-
-      /*CHECK*/
-      /*newTodo = new ToDo(todoGood, listGood);
-      toDoArray.push(newTodo);
-      save();*/
 
       drawToDo(todoGood, listGood);
 
@@ -390,7 +382,6 @@ $(document).on('ready', function() {
 
   $('#explanation').show();
 
-  //$('.openBody').hide();
   $('.form-group').hide();
   $('#inputFormList').hide();
   $('#userFunctionality').hide();
