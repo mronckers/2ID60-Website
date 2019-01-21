@@ -3,48 +3,44 @@
 {% block signup %}
 <div id="id01">
 
-  <div class="modal-content"
-
-    <a href="{% url 'list' %}"><span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span></a>
+  <div class="modal-content">
     <div class="container">
 
-  <h1>Sign Up</h1>
-  <p>Please fill in this form to create an account.</p>
-  <hr>
-  <a href="{% url 'social:begin' 'google-oauth2' %}"><button  class="ist_button_google">
-      <img width="16" height="16" src="https://d3ptyyxy2at9ui.cloudfront.net/google-41de20.svg">
-      Sign up with Google Account
-  </button></a>
-  <hr>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
-  <!-- <label for="email"><b>Email</b></label>
-  <input type="text" class="loginInput" placeholder="Enter Email" name="email" required>
+      <h1>Sign Up</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
+      <a href="{% url 'social:begin' 'google-oauth2' %}">
+        <button  class="ist_button_google">
+        <img width="16" height="16" src="https://d3ptyyxy2at9ui.cloudfront.net/google-41de20.svg">
+        Sign up with Google Account
+        </button>
+      </a>
+      <hr>
 
-  <label for="psw"><b>Password</b></label>
-  <input type="password" class="loginInput" placeholder="Enter Password" name="psw" required>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <p>
+            {{ field.label_tag }}
+            {% ifequal field.label "Username" %}
+              <input type="text" class="loginInput" id="{{field.id_for_label}}" placeholder="Enter {{field.label}}" name="{{field.html_name}}" required>
+            {% else %}
+              <input type="password" class="loginInput" id="{{field.id_for_label}}" placeholder="Enter {{field.label}}" name="{{field.html_name}}" required>
+            {% endifequal %}
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+          </p>
+        {% endfor %}
+        <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+        <div class="clearfix">
+          <a href="{% url 'list' %}"><button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button></a>
+          <a href="{% url 'list' %}"><button class="userbutton" type="submit" class="signup">Sign Up</button></a>
+        </div>
 
-  <label for="psw-repeat"><b>Repeat Password</b></label>
-  <input type="password" class="loginInput" placeholder="Repeat Password" name="psw-repeat" required>
-
-  <label>
-    <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-  </label>
-
-  <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-
-  <div class="clearfix">
-    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-    <a href="{% url 'list' %}"><button class="userbutton" type="submit" class="signup">Sign Up</button></a>
+      </form>
+    </div>
   </div>
-  -->
-  </form>
 </div>
-
-</div>
-</div>
-
 
 {% endblock signup %}

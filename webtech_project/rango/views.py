@@ -1,11 +1,18 @@
 from django.shortcuts import render
 from .models import TodoList, Task
 from django.contrib.auth.models import User
+from django.contrib import auth
 from django.http import HttpResponse
-import json
+from django.http import *
+from django.shortcuts import render_to_response,redirect, render
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
+from rango.forms import SignUpForm
+import json
 
 def base(request):
     return render(request, 'rango/base.html', {})
@@ -18,35 +25,35 @@ def list(request):
         return render(request, 'rango/list.html', {'lists': lists, 'tasks': tasks, 'name' : user.first_name})
     # if not, redirect to login
     else :
-        return render(request, 'registration/login.html')
+        return redirect('login')
+
+def login_user(request):
+    if request.method == 'Post':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('list')
+    else:
+        form = LoginForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 def signup(request):
-    return render(request, 'rango/signup.html')
-
-def login(request):
-    if request.user.is_authenticated():
-        return redirect('rango/list.html')
-
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = auth.authenticate(username=username, password=password)
-
-        if user is not None:
-            auth.login(request, user)
-            return redirect('rango/list.html')
-
-        else:
-            messages.error(request, 'Error wrong username/password')
-
-    return render(request, 'registration/login.html')
-
-class SignUp(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'signup.html'
-
-
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('list')
+    else:
+        form = SignUpForm()
+    return render(request, 'rango/signup.html', {'form': form})
 
 # Some basic checking for AJAX request used for adding/deleting/searching tasks/lists and toggling open_status (authenticated and well formed requests)
 # The second argument tells the function what keys should be searched for in the POST
