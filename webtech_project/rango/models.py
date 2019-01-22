@@ -12,10 +12,11 @@ from django.db import models
 #        return self.name
 #
 class TodoList(models.Model):
-    name = models.CharField(max_length = 128, unique = True)
+    name = models.CharField(max_length = 128)
     colour = models.CharField(max_length = 128, default = 'white')
     owner = models.ForeignKey(User, on_delete = models.CASCADE)
     open_status = models.BooleanField(default = True)
+    unique_together = ('name', 'owner')
     def __str__(self):
         return self.name
     def __unicode__(self):
