@@ -111,7 +111,7 @@ $(document).on('ready', function() {
    * I the case of Task, the content (named 'name' and not 'content', sorry for that)
    * and the parent list name
    */
-  function modifyAJAX(data, url){
+  /*function modifyAJAX(data, url){
     var csrf_token = getCookie('csrftoken');
     $.ajax({
         url: url,
@@ -121,7 +121,7 @@ $(document).on('ready', function() {
         headers: {'X-CSRFToken': csrf_token },
         success: function (data, textStatus, jqXHR) {
           /*TODO This should be notified to the user via pop up I guess*/
-          if(jqXHR.status != 200){
+      /*    if(jqXHR.status != 200){
             console.log('Error on db access ', jqXHR.status);
           }
         },
@@ -136,7 +136,15 @@ $(document).on('ready', function() {
    * I the case of Task, the content (named 'name' and not 'content', sorry for that)
    * and the parent list name
    */
-  /*function modifyAJAX(data, url, on_success = onSuccess){
+
+   function onSuccessAJAX(data, textStatus, jqXHR) {
+          /*TODO This should be notified to the user via pop up I guess*/
+          if(jqXHR.status != 200){
+            console.log('Error on db access ', jqXHR.status);
+          }
+  }
+
+  function modifyAJAX(data, url, on_success = onSuccessAJAX){
     var csrf_token = getCookie('csrftoken');
     $.ajax({
         url: url,
@@ -152,12 +160,7 @@ $(document).on('ready', function() {
 
   }
   /* Short function for managing default success behaviour after $.ajax() */
- /*  function onSuccessAJAX(data, textStatus, jqXHR) {
-          /*TODO This should be notified to the user via pop up I guess*/
-          /*if(jqXHR.status != 200){
-            console.log('Error on db access ', jqXHR.status);
-          }
-  } */
+
 
 
   /*Sends post to reques modification of list*/
@@ -177,7 +180,7 @@ $(document).on('ready', function() {
   }
 
   /*Sends post to request search of list*/
-  /*function searchListAJAX(string){
+  function searchListAJAX(string){
     return modifyAJAX({'string' : string}, '/search_list/', searchOnSuccess)
   }
 
@@ -185,8 +188,10 @@ $(document).on('ready', function() {
    * modifyAJAX does on success.
    * In this case, it would be fetching the returned json
    * and changing the html as needed*/
-  /*function searchOnSuccess(data, textStatus, jqXHR){
+  function searchOnSuccess(data, textStatus, jqXHR){
     let do_something;
+    console.log(data);
+    console.log(jqXHR);
   }
 
 
@@ -262,6 +267,7 @@ $(document).on('ready', function() {
     e.preventDefault();
     $('#myModal').show();
     card = this;
+    console.log(card);
 
     let ok = document.getElementById("OK");
     let cancel = document.getElementById("Cancel");
