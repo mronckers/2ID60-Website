@@ -22,7 +22,11 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#" id="openUserFunctionality">
         {% if user.is_authenticated %}
-          {{ user.username }}
+          {% if user.first_name %}
+            {{user.first_name}}
+          {% else %}
+            {{ user.username }}
+          {% endif %}
         {% else %}
           User
         {% endif %}
@@ -34,12 +38,12 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active ml-auto" id="searchForm">
             <form class="example" action="">
-              <input type="text" placeholder="Search..." name="search" id="searchInput">
-              <button type="submit"><i class="fa fa-search"></i></button>
+              <input type="text" data-toggle="collapse" data-target="#navbarNav" placeholder="Search..." name="search" id="searchInput">
+              <button type="submit" data-toggle="collapse" data-target="#navbarNav"><i class="fa fa-search"></i></button>
             </form>
           </li>
           <li class="nav-item active ml-auto" id="openFormListButton">
-            <a class="nav-link" href="#" id="openFormList">Add list<span class="fas fa-plus"></span></a>
+            <a class="nav-link" data-toggle="collapse" data-target="#navbarNav" href="#" id="openFormList">Add list<span class="fas fa-plus"></span></a>
           </li>
         </ul>
       </div>
