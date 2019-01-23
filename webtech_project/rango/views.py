@@ -1,21 +1,18 @@
-from django.shortcuts import render
 from .models import TodoList, Task
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.http import HttpResponse
 from django.http import *
-from django.shortcuts import render_to_response,redirect, render
-from django.template import RequestContext
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views import generic
-from rango.forms import SignUpForm
+from django.shortcuts import redirect, render
+from django.contrib.auth import authenticate, login
+from rango.forms import SignUpForm, LoginForm
 import json
 
+# render the base of the website if this view is asked
 def base(request):
     return render(request, 'rango/base.html', {})
+
+#"standard" render of the website, only if authenticated
 def list(request):
     # in case user has logged in
     if request.user.is_authenticated:
@@ -27,6 +24,7 @@ def list(request):
     else :
         return redirect('login')
 
+#login the user by using the loginForm
 def login_user(request):
     if request.method == 'Post':
         form = LoginForm(request.POST)
@@ -41,6 +39,7 @@ def login_user(request):
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
 
+#signup the user by using the SignUpForm
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -54,6 +53,8 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'rango/signup.html', {'form': form})
+
+
 
 # Some basic checking for AJAX request used for adding/deleting/searching tasks/lists and toggling open_status (authenticated and well formed requests)
 # The second argument tells the function what keys should be searched for in the POST
@@ -70,12 +71,15 @@ def AJAX_checking(request, keys):
     #    return HttpResponse(content = "Malformed request", status = 400)
     return HttpResponse(content_type = 'text/plain', status = 200)
 
-# Post request must contain request.POST['name'] with the list name to be added
+
+
+# Post request must contain request.POST['name', 'colour'] with the list name and color to be added
 def add_list(request):
     response = AJAX_checking(request, ['name', 'colour'])
     # In case of error
     if response.status_code != 200:
         return response
+
     # If not, try to access db
     try:
         l = TodoList.objects.get_or_create(name = request.POST['name'], colour = request.POST['colour'], owner = request.user)[0]
@@ -84,18 +88,24 @@ def add_list(request):
     except:
         return HttpResponse(content = "Saving list at the db raised an Exception", status = 500)
 
-# Post request must contain request.POST['name'] with the list name to be deleted
+
+
+# Post request must contain request.POST['name', 'colour'] with the list name to be deleted
+# Colour is mainly empty
 def delete_list(request):
     response = AJAX_checking(request, ['name', 'colour'])
     # In case of error
     if response.status_code != 200:
         return response
+
     # If not, try to access db
     try:
         l = TodoList.objects.get(name = request.POST['name'], owner = request.user).delete()
         return response
     except:
         return HttpResponse(content = "Deleting list from the db raised an Exception", status = 500)
+
+
 
 # Post request must contain request.POST['name'] and request.POST['parent_list'] with the
 # content of the task to be added and the name of the list containing the task
@@ -104,6 +114,7 @@ def add_task(request):
     # In case of error
     if response.status_code != 200:
         return response
+
     # If not, try to access db
     try:
         parent = TodoList.objects.get(name = request.POST['parent_list'], owner = request.user)
@@ -113,6 +124,8 @@ def add_task(request):
     except Exception as inst:
         return HttpResponse(content = "Adding task to the db raised an Exception", status = 500)
 
+
+
 # Post request must contain request.POST['name'] and request.POST['parent_list'] with the
 # content of the task to be deleted and the name of the list containing the task
 def delete_task(request):
@@ -120,6 +133,7 @@ def delete_task(request):
     # In case of error
     if response.status_code != 200:
         return response
+
     # If not, try to access db
     try:
         parent = TodoList.objects.get(name = request.POST['parent_list'], owner = request.user)
@@ -128,6 +142,8 @@ def delete_task(request):
         return response
     except:
         return HttpResponse(content = "Deleting task from the db raised an Exception", status = 500)
+
+
 
 # POST request must contain the POST['string'] to be searched
 # Returns a json with this information of all lists that don't contain the searched input:
@@ -143,17 +159,21 @@ def search_list(request):
     # In case of error
     if response.status_code != 200:
         return response
+
     # If not, access db to retrieve requested lists
     try:
+        # Search all list names that contain the request
         containingLists = TodoList.objects.filter(owner = request.user, name__contains = request.POST['string'])
-
         allLists = TodoList.objects.filter(owner = request.user)
+
+        #search all tasks that contain the request
         listsWithContainingTasks = []
         for list in allLists:
             containingTasks = Task.objects.filter(parent_list = list, content__contains = request.POST['string'])
             if len(containingTasks) > 0:
                 listsWithContainingTasks.append(list)
 
+        #Create array with all lists that do not contain the request (or in their tasks)
         lists = set(allLists)-set(containingLists)-set(listsWithContainingTasks)
         result = {'lists' : []}
         for todo_list in lists:
@@ -166,12 +186,16 @@ def search_list(request):
     except:
         return HttpResponse(content = "Searching at db raised an Exception", status = 500)
 
+
+
 # POST request must contain 'name' of the list to be toggled
 def toggle_open_status(request):
     response = AJAX_checking(request, ['name'])
     # In case of error
     if response.status_code != 200:
         return response
+
+        
     # If not, access db to toggle open_status of requested list
     try:
         todo_list = TodoList.objects.get(owner = request.user, name = request.POST['name'])

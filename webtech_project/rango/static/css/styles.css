@@ -36,6 +36,17 @@ body {
   border-radius: 5px !important;
 }
 
+/* Pop ups */
+.modal-dialog {
+  border: 3px solid #50a1af;
+  border-radius: 10px;
+}
+
+.modal-body {
+  border-width: 1px 0px 1px 0px !important;
+  border: solid #50a1af;
+}
+
 /* -----------------------------------
  Styling of navbar
  -------------------------------------*/
@@ -43,6 +54,7 @@ body {
   font-size: 19px;
 }
 
+/* -------------- Input form for adding a new list ------------------*/
 #inputFormList {
   width: 100%;
   padding: 0px 20px 20px 20px;
@@ -50,31 +62,6 @@ body {
 
 #colorPicker {
   margin-right:5px;
-}
-
-
-#userFunctionality {
-  padding: 0px 20px 1px 20px;
-}
-
-/* Style the search field */
-#searchInput {
-  padding: 10px;
-  font-size: 17px;
-  border: 1px solid #50a1af;
-  border-radius: 5px;
-  float: left;
-  width: 50%;
-  margin-left:10px;
-  top: 50%;
-}
-
-#searchButton {
-  margin: 0px 5px;
-}
-
-.fa-undo, .fa-search {
-  color:white !important;
 }
 
 .radio-item {
@@ -110,6 +97,7 @@ body {
   display: block;
 }
 
+/* Each radio button has his own color*/
 #RBblue label:before {
   border: 2px solid #50a1af;
 }
@@ -150,6 +138,58 @@ body {
   background: #c1c155;
 }
 
+
+/* Style the search field */
+#searchInput {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid #50a1af;
+  border-radius: 5px;
+  float: left;
+  width: 50%;
+  margin-left:10px;
+  top: 50%;
+}
+
+#searchButton {
+  margin: 0px 5px;
+}
+
+.fa-undo, .fa-search {
+  color:white !important;
+}
+
+/* Style the submit button */
+form#searchFunction button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #50a1af;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form#searchFunction button:hover {
+  background: grey;
+}
+
+/* Clear floats */
+form#searchFunction::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+/* Style the user functionality */
+#userFunctionality {
+  padding: 0px 20px 1px 20px;
+}
+
 .Ubutton {
     background: #50a1af;
     color: white;
@@ -159,16 +199,6 @@ body {
 }
 .Ubutton:hover {
   background: grey;
-}
-
-.modal-dialog {
-  border: 3px solid #50a1af;
-  border-radius: 10px;
-}
-
-.modal-body {
-  border-width: 1px 0px 1px 0px !important;
-  border: solid #50a1af;
 }
 
 /* ---------------------------------------
@@ -255,37 +285,10 @@ h1.heading {
   padding: 5px;
 }
 
-/* --------- search bar ------------ */
 
-
-
-/* Style the submit button */
-form#searchFunction button {
-  float: left;
-  width: 20%;
-  padding: 10px;
-  background: #50a1af;
-  color: white;
-  font-size: 17px;
-  border: 1px solid grey;
-  border-radius: 5px;
-  border-left: none; /* Prevent double borders */
-  cursor: pointer;
-}
-
-form#searchFunction button:hover {
-  background: grey;
-}
-
-/* Clear floats */
-form#searchFunction::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* ------sign up form -- */
-
+/* --------------------------------------------------------------------------
+Sign up and login forms
+---------------------------------------------------------------------------- */
 * {box-sizing: border-box}
 /* Full-width input fields */
 .loginInput {
@@ -313,6 +316,7 @@ form#searchFunction::after {
   opacity: 0.9;
   position: relative;
 }
+
 .loginuserbutton {
   background-color: #50a1af;
   color: white;
@@ -323,10 +327,12 @@ form#searchFunction::after {
   opacity: 0.9;
   position: relative;
 }
+
 .userbutton:hover {
   opacity:1;
   background: grey;
 }
+
 .loginuserbutton:hover {
   opacity:1;
   background: grey;
@@ -337,7 +343,6 @@ form#searchFunction::after {
   padding: 14px 20px;
   background-color: #f44336;
   cursor: pointer;
-
 }
 
 /* Float cancel and signup buttons and add an equal width */
@@ -352,7 +357,7 @@ form#searchFunction::after {
   padding: 16px;
 }
 
-/* The Modal (background) */
+/* The Login and signup forms (background) */
 #id01 #id02 {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -408,21 +413,6 @@ hr {
   }
 }
 
-/* -------login form /*
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  padding-top: 60px;
-}
 
 @-webkit-keyframes animatezoom {
   from {-webkit-transform: scale(0)}
@@ -434,10 +424,8 @@ hr {
   to {transform: scale(1)}
 }
 
-
-
+/* Google button styling */
 .ist_button_google {
-
     background-color: white;
     color: black;
     padding: 14px 20px;

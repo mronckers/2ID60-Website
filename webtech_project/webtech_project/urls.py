@@ -21,6 +21,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     # Empty uri will redirect to list. If not signed in, list redirects login
     url(r'^$', views.list, name='list'),
+    
     url(r'^list/$', views.list , name='list'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^admin/', admin.site.urls),

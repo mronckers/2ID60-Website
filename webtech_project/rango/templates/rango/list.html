@@ -1,3 +1,4 @@
+<!-- Main content of the website: todolists and the explanation -->
 {% extends 'rango/base.html' %}
 
 {% block content %}
@@ -24,60 +25,70 @@
     </div>
   {% endif %}
 
-<!-- Empty container for the cards of lists and to-dos
+<!-- Container for the cards of lists and to-dos
     Cards will be added inside the "row" class -->
   <div class="content">
-      <div class="container">
-          <div class="row">
+    <div class="container">
+      <div class="row">
 
-            {% for list in lists %}
-            <div class="col-xs-12 col-sm-4">
-                <div class="card" id= {{list.name}}>
-                    <div class="card-header" id="header{{list.name}}" style="background-color: {{list.colour}} !important">
-                      {{ list.name }}
-                      <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
-                      {% if list.open_status %}
-                        <a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>
-                        <a href="" class="openBody" style="display:none;"><span class="float-right fas fa-plus"></span></a>
-                      {% else %}
-                        <a href="" class="closeBody" style="display:none;"><span class="float-right fas fa-minus" ></span></a>
-                        <a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>
-                      {% endif %}
-                    </div>
+        <!-- shows the header for the lists in the database -->
+        {% for list in lists %}
+          <div class="col-xs-12 col-sm-4">
+            <div class="card" id= {{list.name}}>
+              <div class="card-header" id="header{{list.name}}" style="background-color: {{list.colour}} !important">
+                {{ list.name }}
+                <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
 
+                <!-- dependent on "openstatus" in database, show plus or minus -->
+                {% if list.open_status %}
+                  <a href="" class="closeBody"><span class="float-right fas fa-minus" ></span></a>
+                  <a href="" class="openBody" style="display:none;"><span class="float-right fas fa-plus"></span></a>
+                {% else %}
+                  <a href="" class="closeBody" style="display:none;"><span class="float-right fas fa-minus" ></span></a>
+                  <a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>
+                {% endif %}
+              </div>
 
+              <!-- dependent on "openstatus" in database, show card-body -->
+              {% if list.open_status %}
+                <div class="card-body text-left" id="card-body">
+              {% else %}
+                <div class="card-body text-left" id="card-body" style="display:none;">
+              {% endif %}
 
-                    {% if list.open_status %}
-                      <div class="card-body text-left" id="card-body">
-                    {% else %}
-                      <div class="card-body text-left" id="card-body" style="display:none;">
-                    {% endif %}
-                      <ul class="list-group list-group-flush" id="newList">
-                        {% for task in tasks %}
-                          {% ifequal task.parent_list list %}
+                  <ul class="list-group list-group-flush" id="newList">
+
+                    <!-- show all tasks that have "list" as parent_list -->
+                    {% for task in tasks %}
+                      {% ifequal task.parent_list list %}
                         <li class="list-group-item" id={{task.content|cut:" "}}>
                           {{task.content}}
                           <a href="" class="check-mark">
                             <span class="float-right fas fa-check"></span>
-                          </a></li>
-                          {% endifequal %}
-                        {% endfor %}
-                      </ul>
-                    </div>
+                          </a>
+                        </li>
+                      {% endifequal %}
+                    {% endfor %}
 
-                    <div class="card-add-more">
-                      <form class="form-group">
-                          <div class="input-group">
-                              <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
-                              <a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>
-                              <a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>
-                          </div>
-                      </form>
-                        <button class="btn btn-block addToDo">
-                            Add to-do
-                        </button>
-                    </div>
+                  </ul>
+
                 </div>
+
+                <!-- input form for adding new todos -->
+                <div class="card-add-more">
+                  <form class="form-group">
+                    <div class="input-group">
+                      <input class="form-control" type="text" id="newItemInput" placeholder="To do...">
+                      <a href="" class="addItem"><span class="float-right fas fa-plus"></span></a>
+                      <a href="" class="cancelAddItem"><span class="float-right fas fa-trash-alt"></span></a>
+                    </div>
+                  </form>
+                  <button class="btn btn-block addToDo">
+                    Add to-do
+                  </button>
+                </div>
+
+              </div>
             </div>
             {% endfor %}
 

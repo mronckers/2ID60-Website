@@ -18,8 +18,10 @@
   </head>
 
   <body>
-    <!-- Navigation bar with two buttons for "user" and "add list" -->
+    <!-- Navigation bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+      <!-- user functionality, show name if authenticated -->
       <a class="navbar-brand" href="#" id="openUserFunctionality">
         {% if user.is_authenticated %}
           {% if user.first_name %}
@@ -31,11 +33,17 @@
           User
         {% endif %}
         <span class="fas fa-user"></span></a>
+
+      <!-- toggle button for small screen sizes -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <!-- collapsible part of the navbar -->
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+
+          <!-- search input -->
           <li class="nav-item active ml-auto" id="searchForm">
             <form id="searchFunction">
               <input type="text" placeholder="Search..." name="search" id="searchInput">
@@ -43,49 +51,55 @@
               <button id="undoSearch"><i class="fas fa-undo"></i></button>
             </form>
           </li>
+
+          <!-- button to open "add list" -->
           <li class="nav-item active ml-auto" id="openFormListButton">
             <a class="nav-link" href="#" id="openFormList">Add list<span class="fas fa-plus"></span></a>
           </li>
+
         </ul>
       </div>
     </nav>
-        <!-- Form for adding a new list and choosing the name -->
+
+
+    <!-- Form for adding a new list and choosing the name -->
     <div class="float-right bg-light" id="inputFormList">
       <a href="" class="float-right" id="cancelAddList"><span class="fas fa-trash-alt"></span></a>
       <form>
         <a href="" class="submit float-right" id="addList"><span class="fas fa-plus"></span></a>
         <input class="float-right" type="text" placeholder="Name..." id="inputListName">
+
+        <!-- radio buttons with different colors to choose the color of the list -->
         <div class="float-right" id="colorPicker">
-          Choose your color
-          <div class="radio-item" id="RBblue">
-            <input type="radio" name="color" value="#50a1af" id="blue" checked>
-            <label for="blue"></label>
-          </div>
-
-          <div class="radio-item" id="RBred">
-            <input type="radio" name="color" value="#af5950" id="red">
-            <label for="red"></label>
-          </div>
-          
-          <div class="radio-item" id="RBgreen">
-            <input type="radio" name="color" value="#50af81" id="green">
-            <label for="green"></label>
-          </div>
-
-
-          <div class="radio-item" id="RBpurple">
-            <input type="radio" name="color" value="#5c50af" id="purple">
-            <label for="purple"></label>
-          </div>
-          <div class="radio-item" id="RByellow">
-            <input type="radio" name="color" value="#c1c155" id="yellow">
-            <label for="yellow"></label>
+          <div>
+            <div class="radio-item" id="RBblue">
+              <input type="radio" name="color" value="#50a1af" id="blue" checked>
+              <label for="blue"></label>
+            </div>
+            <div class="radio-item" id="RBred">
+              <input type="radio" name="color" value="#af5950" id="red">
+              <label for="red"></label>
+            </div>
+            <div class="radio-item" id="RBgreen">
+              <input type="radio" name="color" value="#50af81" id="green">
+              <label for="green"></label>
+            </div>
+            <div class="radio-item" id="RBpurple">
+              <input type="radio" name="color" value="#5c50af" id="purple">
+              <label for="purple"></label>
+            </div>
+            <div class="radio-item" id="RByellow">
+              <input type="radio" name="color" value="#c1c155" id="yellow">
+              <label for="yellow"></label>
+            </div>
           </div>
         </div>
+
       </form>
     </div>
 
-    <!-- Placeholder for what will be the user input in future updates -->
+    <!-- User functionality, showing logout function if is_authenticated
+      showing login and signup if not authenticated -->
     <div class="bg-light" id="userFunctionality">
       {% if user.is_authenticated %}
         <button class="Ubutton" onclick="document.getElementById('popUpLogOut').style.display='block'">Logout</button>
@@ -95,20 +109,19 @@
       {% endif %}
     </div>
 
-    <!-- The Modal (contains the Sign Up form) -->
+    <!-- The Sign up form -->
     {% block signup %}
     {% endblock signup %}
-        <!-- The login Modal -->
 
+    <!-- The login -->
     {% block login %}
     {% endblock login %}
 
-    <!-- Main content of the to-do-list website -->
+    <!-- Main content: the to-do-lists -->
     <section class="wrapper">
       <div class="container-fostrap">
         {% block content %}
         {% endblock content %}
-
       </div>
   </section>
 
@@ -116,52 +129,40 @@
   <div class="modal" id="myModal">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
-
-        <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Delete list?</h4>
           <button type="button" class="close" id="closePopUp">&times;</button>
         </div>
-
-        <!-- Modal body -->
         <div class="modal-body">
           Are you sure you want to delete this list?
         </div>
-
-        <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-success" id="OK">OK</button>
           <button type="button" class="btn btn-danger" id="Cancel">Cancel</button>
         </div>
-
       </div>
     </div>
   </div>
 
+  <!-- Pop up for logging out -->
   <div class="modal" id="popUpLogOut">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
-
-        <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Log out?</h4>
           <button type="button" class="close" onclick="document.getElementById('popUpLogOut').style.display='none'" id="closePopUpLogout">&times;</button>
         </div>
-
-        <!-- Modal body -->
         <div class="modal-body">
           Are you sure you want to log out?
         </div>
-
-        <!-- Modal footer -->
         <div class="modal-footer">
           <a href="{% url 'logout' %}"><button type="button" class="btn btn-success" id="OKLogout">OK</button></a>
           <button type="button" class="btn btn-danger" onclick="document.getElementById('popUpLogOut').style.display='none'">Cancel</button>
         </div>
-
       </div>
     </div>
     </div>
+
     <!-- JavaScript -->
     <!-- jQuery first, then Bootstrap JS, then "app.js" -->
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

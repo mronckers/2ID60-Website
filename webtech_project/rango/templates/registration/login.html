@@ -1,49 +1,50 @@
+<!-- login page -->
 {% extends 'rango/base.html' %}
 
 {% block login %}
-
-
-<!-- templates/registration/login.html -->
   <div id="id02">
-    <!-- Modal Content -->
     <div class="modal-content">
       <div class="container">
-          <h1>Login</h1>
-          <p>Currently you are not logged in. To use this site, please fill in this form to log into an account.</p>
-          <hr>
-          <a href="{% url 'social:begin' 'google-oauth2' %}">
-            <button class="ist_button_google">
+        <h1>Login</h1>
+        <p>Currently you are not logged in. To use this site, please fill in this form to log into an account.</p>
+        <hr>
+
+          <!-- button to login with google -->
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+          <button class="ist_button_google">
             <img width="16" height="16" src="https://d3ptyyxy2at9ui.cloudfront.net/google-41de20.svg">
             Log in with Google Account
-            </button>
-          </a>
-          <hr>
+          </button>
+        </a>
+        <hr>
 
-          <form method="post">
-            {% csrf_token %}
-            {% for field in form %}
-              <p>
-                {{ field.label_tag }}
-                {% ifequal field.label "Username" %}
-                  <input type="text" class="loginInput" id="{{field.id_for_label}}" placeholder="Enter {{field.label}}" name="{{field.html_name}}" required>
-                {% else %}
-                  <input type="password" class="loginInput" id="{{field.id_for_label}}" placeholder="Enter {{field.label}}" name="{{field.html_name}}" required>
-                {% endifequal %}
-                {% for error in field.errors %}
-                  <p style="color: red">{{ error }}</p>
-                {% endfor %}
-              </p>
-            {% endfor %}
-            <p>If you don't have an account yet, <a href="{% url 'signup' %}" style="color:dodgerblue">sign up</a> here.</p>
-            <div class="container" style="background-color:#f1f1f1">
-              <button class="loginuserbutton" type="submit">Login</button>
-              <a href="{% url 'list' %}">
-                <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
-              </a>
-            </div>
-          </form>
-        </div>
+          <!-- form to login with an account that is created by the user (without google) -->
+        <form method="post">
+          {% csrf_token %}
+          {% for field in form %}
+            <p>
+              {{ field.label_tag }}
+              {% ifequal field.label "Username" %}
+                <input type="text" class="loginInput" id="{{field.id_for_label}}" placeholder="Enter {{field.label}}" name="{{field.html_name}}" required>
+              {% else %}
+                <input type="password" class="loginInput" id="{{field.id_for_label}}" placeholder="Enter {{field.label}}" name="{{field.html_name}}" required>
+              {% endifequal %}
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+            </p>
+          {% endfor %}
+          <p>If you don't have an account yet, <a href="{% url 'signup' %}" style="color:dodgerblue">sign up</a> here.</p>
+          <div class="container" style="background-color:#f1f1f1">
+            <button class="loginuserbutton" type="submit">Login</button>
+            <a href="{% url 'list' %}">
+              <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+            </a>
+          </div>
+        </form>
+        
       </div>
     </div>
+  </div>
 
 {% endblock login %}
