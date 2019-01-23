@@ -72,13 +72,13 @@ def AJAX_checking(request, keys):
 
 # Post request must contain request.POST['name'] with the list name to be added
 def add_list(request):
-    response = AJAX_checking(request, ['name'])
+    response = AJAX_checking(request, ['name', 'colour'])
     # In case of error
     if response.status_code != 200:
         return response
     # If not, try to access db
     try:
-        l = TodoList.objects.get_or_create(name = request.POST['name'], colour = "white", owner = request.user)[0]
+        l = TodoList.objects.get_or_create(name = request.POST['name'], colour = request.POST['colour'], owner = request.user)[0]
         l.save()
         return response
     except:
@@ -86,7 +86,7 @@ def add_list(request):
 
 # Post request must contain request.POST['name'] with the list name to be deleted
 def delete_list(request):
-    response = AJAX_checking(request, ['name'])
+    response = AJAX_checking(request, ['name', 'colour'])
     # In case of error
     if response.status_code != 200:
         return response
@@ -129,23 +129,12 @@ def delete_task(request):
     except:
         return HttpResponse(content = "Deleting task from the db raised an Exception", status = 500)
 
-
 # POST request must contain the POST['string'] to be searched
-# Returns a json with this information:
+# Returns a json with this information of all lists that don't contain the searched input:
 #    {
 #        'lists' : [
 #            {
 #                'name' : ,
-#                'open' : ,
-#                'colour' : ,
-#                'tasks' : [
-#                    {
-#                        'content' : ,
-#                    },
-#                    {
-#                        'content' : ,
-#                    }
-#                ]
 #             }
 #        ]
 #    }
@@ -156,18 +145,21 @@ def search_list(request):
         return response
     # If not, access db to retrieve requested lists
     try:
-        lists = TodoList.objects.filter(owner = request.user, name__contains = request.POST['string'])
+        containingLists = TodoList.objects.filter(owner = request.user, name__contains = request.POST['string'])
+
+        allLists = TodoList.objects.filter(owner = request.user)
+        listsWithContainingTasks = []
+        for list in allLists:
+            containingTasks = Task.objects.filter(parent_list = list, content__contains = request.POST['string'])
+            if len(containingTasks) > 0:
+                listsWithContainingTasks.append(list)
+
+        lists = set(allLists)-set(containingLists)-set(listsWithContainingTasks)
         result = {'lists' : []}
         for todo_list in lists:
             list_dict = {
-                    'name' : todo_list.name,
-                    'open_status' : todo_list.open_status,
-                    'colour' : todo_list.colour,
-                    'tasks': []
+                    'name' : todo_list.name
                     }
-            tasks = Task.objects.filter(parent_list = todo_list)
-            for task in tasks:
-                result['tasks'].append({'content' : task.content})
             result['lists'].append(list_dict)
         result_json = json.dumps(result)
         return HttpResponse(result_json, content_type = 'application/json', status = 200)

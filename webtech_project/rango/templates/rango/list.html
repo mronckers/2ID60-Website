@@ -33,7 +33,7 @@
             {% for list in lists %}
             <div class="col-xs-12 col-sm-4">
                 <div class="card" id= {{list.name}}>
-                    <div class="card-header">
+                    <div class="card-header" id="header{{list.name}}" style="background-color: {{list.colour}} !important">
                       {{ list.name }}
                       <a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>
                       {% if list.open_status %}
@@ -46,7 +46,7 @@
                     </div>
 
 
-                    
+
                     {% if list.open_status %}
                       <div class="card-body text-left" id="card-body">
                     {% else %}

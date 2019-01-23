@@ -39,7 +39,8 @@
           <li class="nav-item active ml-auto" id="searchForm">
             <form id="searchFunction">
               <input type="text" placeholder="Search..." name="search" id="searchInput">
-              <button type="submit"><i class="fa fa-search"></i></button>
+              <button type="submit" id="searchButton"><i class="fas fa-search"></i></button>
+              <button id="undoSearch"><i class="fas fa-undo"></i></button>
             </form>
           </li>
           <li class="nav-item active ml-auto" id="openFormListButton">
@@ -52,15 +53,34 @@
     <div class="float-right bg-light" id="inputFormList">
       <a href="" class="float-right" id="cancelAddList"><span class="fas fa-trash-alt"></span></a>
       <form>
-      <a href="" class="submit float-right" id="addList"><span class="fas fa-plus"></span></a>
-      <input class="float-right" type="text" placeholder="Name..." id="inputListName">
-      <input class="float-right" type="color" id="inputColor">
-    </form>
-    <div class="float-right">
-      <input type="radio" name="gender" value="male"> Male
-      <input type="radio" name="gender" value="female"> Female
-      <input type="radio" name="gender" value="other"> Other
-    </div>
+        <a href="" class="submit float-right" id="addList"><span class="fas fa-plus"></span></a>
+        <input class="float-right" type="text" placeholder="Name..." id="inputListName">
+        <div class="float-right" id="colorPicker">
+          Choose your color
+          <div class="radio-item" id="RBblue">
+            <input type="radio" name="color" value="#50a1af" id="blue" checked>
+            <label for="blue"></label>
+          </div>
+
+          <div class="radio-item" id="RBgreen">
+            <input type="radio" name="color" value="#50af81" id="green">
+            <label for="green"></label>
+          </div>
+
+          <div class="radio-item" id="RBred">
+            <input type="radio" name="color" value="#af5950" id="red">
+            <label for="red"></label>
+          </div>
+          <div class="radio-item" id="RBpurple">
+            <input type="radio" name="color" value="#5c50af" id="purple">
+            <label for="purple"></label>
+          </div>
+          <div class="radio-item" id="RByellow">
+            <input type="radio" name="color" value="#c1c155" id="yellow">
+            <label for="yellow"></label>
+          </div>
+        </div>
+      </form>
     </div>
 
     <!-- Placeholder for what will be the user input in future updates -->

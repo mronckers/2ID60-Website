@@ -48,6 +48,11 @@ body {
   padding: 0px 20px 20px 20px;
 }
 
+#colorPicker {
+  margin-right:5px;
+}
+
+
 #userFunctionality {
   padding: 0px 20px 1px 20px;
 }
@@ -59,7 +64,90 @@ body {
   border: 1px solid #50a1af;
   border-radius: 5px;
   float: left;
-  width: 80%;
+  width: 50%;
+  margin-left:10px;
+  top: 50%;
+}
+
+#searchButton {
+  margin: 0px 5px;
+}
+
+.fa-undo, .fa-search {
+  color:white !important;
+}
+
+.radio-item {
+  display: inline-block;
+  position: relative;
+  padding: 0 0px;
+}
+
+.radio-item input[type='radio'] {
+  display: none;
+}
+
+.radio-item label:before {
+  content: " ";
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin: 0 5px 0 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  background-color: transparent;
+}
+
+.radio-item input[type=radio]:checked + label:after {
+  border-radius: 11px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 9px;
+  left: 4px;
+  content: " ";
+  display: block;
+}
+
+#RBblue label:before {
+  border: 2px solid #50a1af;
+}
+
+#RBblue input[type=radio]:checked + label:after {
+  background: #50a1af;
+}
+
+#RBred label:before {
+  border: 2px solid #50af81;
+}
+
+#RBred input[type=radio]:checked + label:after {
+  background: #50af81;
+}
+
+#RBgreen label:before {
+  border: 2px solid #af5950;
+}
+
+#RBgreen input[type=radio]:checked + label:after {
+  background: #af5950;
+}
+
+#RBpurple label:before {
+  border: 2px solid #5c50af;
+}
+
+#RBpurple input[type=radio]:checked + label:after {
+  background: #5c50af;
+}
+
+#RByellow label:before {
+  border: 2px solid #c1c155;
+}
+
+#RByellow input[type=radio]:checked + label:after {
+  background: #c1c155;
 }
 
 .Ubutton {
@@ -172,7 +260,7 @@ h1.heading {
 
 
 /* Style the submit button */
-form.example button {
+form#searchFunction button {
   float: left;
   width: 20%;
   padding: 10px;
@@ -185,12 +273,12 @@ form.example button {
   cursor: pointer;
 }
 
-form.example button:hover {
+form#searchFunction button:hover {
   background: grey;
 }
 
 /* Clear floats */
-form.example::after {
+form#searchFunction::after {
   content: "";
   clear: both;
   display: table;

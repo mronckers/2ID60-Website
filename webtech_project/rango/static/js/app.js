@@ -27,7 +27,7 @@ $(document).on('ready', function() {
     let cardHTML = (
       '<div class="col-xs-12 col-sm-4">'+
           '<div class="card" id="'+ listGood + '">' +
-              '<div class="card-header">'+
+              '<div class="card-header" id="header'+listGood+'">'+
                  listGood +
                 '<a href="" class="removeCard"><span class="float-left fas fa-trash-alt"></span></a>'+
                 '<a href="" class="openBody"><span class="float-right fas fa-plus"></span></a>'+
@@ -106,37 +106,7 @@ $(document).on('ready', function() {
     return cookieValue;
   }
 
-  /* Sends POST request to url with data.
-   * In the case of List, data is the name of the list,
-   * I the case of Task, the content (named 'name' and not 'content', sorry for that)
-   * and the parent list name
-   */
-  /*function modifyAJAX(data, url){
-    var csrf_token = getCookie('csrftoken');
-    $.ajax({
-        url: url,
-        data: data,
-        type: 'POST',
-        dataType : 'text',
-        headers: {'X-CSRFToken': csrf_token },
-        success: function (data, textStatus, jqXHR) {
-          /*TODO This should be notified to the user via pop up I guess*/
-      /*    if(jqXHR.status != 200){
-            console.log('Error on db access ', jqXHR.status);
-          }
-        },
-        error : function (jqXHR, textStatus){
-          console.log('Error on AJAX post:', textStatus);
-        }
-    });
-
-  }
-  /* Sends POST request to url with data.
-   * In the case of List, data is the name of the list,
-   * I the case of Task, the content (named 'name' and not 'content', sorry for that)
-   * and the parent list name
-   */
-
+   /* Short function for managing default success behaviour after $.ajax() */
    function onSuccessAJAX(data, textStatus, jqXHR) {
           /*TODO This should be notified to the user via pop up I guess*/
           if(jqXHR.status != 200){
@@ -144,6 +114,11 @@ $(document).on('ready', function() {
           }
   }
 
+  /* Sends POST request to url with data.
+   * In the case of List, data is the name of the list,
+   * I the case of Task, the content (named 'name' and not 'content', sorry for that)
+   * and the parent list name
+   */
   function modifyAJAX(data, url, on_success = onSuccessAJAX){
     var csrf_token = getCookie('csrftoken');
     $.ajax({
@@ -159,13 +134,10 @@ $(document).on('ready', function() {
     });
 
   }
-  /* Short function for managing default success behaviour after $.ajax() */
-
-
 
   /*Sends post to reques modification of list*/
-  function modifyListAJAX(listName, url){
-    modifyAJAX({'name': listName}, url);
+  function modifyListAJAX(listName, colour, url){
+    modifyAJAX({'name': listName, 'colour': colour}, url);
   }
 
   /*Sends post to request modification of task*/
@@ -189,9 +161,14 @@ $(document).on('ready', function() {
    * In this case, it would be fetching the returned json
    * and changing the html as needed*/
   function searchOnSuccess(data, textStatus, jqXHR){
-    let do_something;
-    console.log(data);
-    console.log(jqXHR);
+    let jsonResult = JSON.parse(data);
+    let jsonArray = jsonResult.lists;
+
+    for (var i = 0; i < jsonArray.length; i++) {
+      let name = jsonArray[i].name;
+      let newId = '#'+name;
+      $(newId).hide();
+    }
   }
 
 
@@ -204,9 +181,14 @@ $(document).on('ready', function() {
 
   $('#searchFunction').submit(function(e) {
     e.preventDefault();
-    console.log("hello");
+
     let searchInput = $('#searchInput').val().trim();
     searchListAJAX(searchInput);
+  });
+
+  $(document).on('click', '#undoSearch', function(e) {
+    e.preventDefault();
+    document.location.reload(true);
   });
 
   //handles clicking the user button by opening the "userfunctionality"
@@ -233,8 +215,14 @@ $(document).on('ready', function() {
     $('#inputFormList').slideToggle('fast');
     $('#inputListName').val('');
 
+    let color = $('input[name=color]:checked').val();
+    let colorstyling = 'background-color: '+color + " !important";
+    let listId = 'header'+listGood;
+    document.getElementById(listId).setAttribute('style', colorstyling);
+
+
     /*Store at db*/
-    modifyListAJAX(listGood,'/add_list/');
+    modifyListAJAX(listGood, color,'/add_list/');
 
   });
 
@@ -251,8 +239,13 @@ $(document).on('ready', function() {
       $('#inputFormList').slideToggle('fast');
       $(this).val('');
 
-      /*Store at db*/
-      modifyListAJAX(listGood, '/add_list/');
+      let color = $('input[name=color]:checked').val();
+      let colorstyling = 'background-color: '+color + " !important";
+      let listId = 'header'+listGood;
+      document.getElementById(listId).setAttribute('style', colorstyling);
+
+            /*Store at db*/
+      modifyListAJAX(listGood, color, '/add_list/');
 
     }
   });
@@ -274,7 +267,6 @@ $(document).on('ready', function() {
     e.preventDefault();
     $('#myModal').show();
     card = this;
-    console.log(card);
 
     let ok = document.getElementById("OK");
     let cancel = document.getElementById("Cancel");
@@ -285,7 +277,7 @@ $(document).on('ready', function() {
       $('#myModal').hide();
       /*Delete at db*/
       let listName = $(card).parents('.card-header').text().trim()
-      modifyListAJAX(listName, '/delete_list/');
+      modifyListAJAX(listName, "", '/delete_list/');
     };
 
     cancel.onclick = function() {
@@ -312,7 +304,6 @@ $(document).on('ready', function() {
     $(this).parents('.card').children('.card-body').slideToggle('fast');
     /* Change open_status of list at the db*/
     let listName = $(this).parents('.card').attr('id')
-    console.log(listName);
     toggleOpenStatusAJAX(listName);
   });
 
@@ -324,7 +315,6 @@ $(document).on('ready', function() {
     $(this).parents('.card').children('.card-body').slideToggle('fast');
     /* Change open_status of list at the db*/
     let listName = $(this).parents('.card').attr('id');
-    console.log(listName);
     toggleOpenStatusAJAX(listName);
   });
 
@@ -362,7 +352,6 @@ $(document).on('ready', function() {
       e.preventDefault();
       let todo = $(this).val().trim();
       let list = $(this).parents('.card').attr('id');
-      console.log(list)
       let listName = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim();
       addToDo(todo, list);
       $(this).parents('.form-group').toggle();
