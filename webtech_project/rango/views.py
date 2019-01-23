@@ -134,19 +134,9 @@ def delete_task(request):
 # Returns a json with this information:
 #    {
 #        'lists' : [
-#            {
-#                'name' : ,
-#                'open' : ,
-#                'colour' : ,
-#                'tasks' : [
-#                    {
-#                        'content' : ,
-#                    },
-#                    {
-#                        'content' : ,
-#                    }
-#                ]
-#             }
+#            'name1',
+#            'name2',
+#            'name3',
 #        ]
 #    }
 def search_list(request):
@@ -159,16 +149,7 @@ def search_list(request):
         lists = TodoList.objects.filter(owner = request.user, name__contains = request.POST['string'])
         result = {'lists' : []}
         for todo_list in lists:
-            list_dict = {
-                    'name' : todo_list.name,
-                    'open_status' : todo_list.open_status,
-                    'colour' : todo_list.colour,
-                    'tasks': []
-                    }
-            tasks = Task.objects.filter(parent_list = todo_list)
-            for task in tasks:
-                result['tasks'].append({'content' : task.content})
-            result['lists'].append(list_dict)
+            result['lists'].append(todo_list.name)
         result_json = json.dumps(result)
         return HttpResponse(result_json, content_type = 'application/json', status = 200)
     except:
