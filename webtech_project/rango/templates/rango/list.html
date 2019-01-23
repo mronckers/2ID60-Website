@@ -55,10 +55,11 @@
                       <ul class="list-group list-group-flush" id="newList">
                         {% for task in tasks %}
                           {% ifequal task.parent_list list %}
-                        <li class="list-group-item" id={{task.content}}> {{task.content}}
-                        <a href="" class="check-mark">
-                          <span class="float-right fas fa-check"></span>
-                        </a></li>
+                        <li class="list-group-item" id={{task.content|cut:" "}}>
+                          {{task.content}}
+                          <a href="" class="check-mark">
+                            <span class="float-right fas fa-check"></span>
+                          </a></li>
                           {% endifequal %}
                         {% endfor %}
                       </ul>

@@ -1,12 +1,5 @@
 $(document).on('ready', function() {
-
-  let toDoArray = [];
-  let listArray = [];
-
-  let ToDo = function(todo, list) {
-    this.todoAttr = todo;
-    this.listAttr = list;
-  };
+  let searchArray = [];
 
   /* --------------------------------------------------------------------------
   Functions for adding lists to the main container
@@ -63,19 +56,19 @@ $(document).on('ready', function() {
   //adds todos to the array for storage later on
   let addToDo = function(todo, list) {
     if (todo) {
-      let listGood = list.replace("'","").replace(";","").replace(/\s+/g, "");
       let todoGood = todo.replace("'","").replace(";","");
+      let todoWithoutSpace = todoGood.replace(/\s+/g, "")
 
-      drawToDo(todoGood, listGood);
+      drawToDo(todoGood, todoWithoutSpace, list);
 
-      $('#'+listGood).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
+      $('#'+list).children('.card-add-more').children('.form-group').children('.input-group').children('.form-control').val('');
     }
   };
 
   //draws todo
-  let drawToDo = function(todo, list) {
+  let drawToDo = function(todo, todoWithoutSpace, list) {
     let addition = (
-      '<li class="list-group-item" id="'+ todo +'">'
+      '<li class="list-group-item" id="'+ todoWithoutSpace +'">'
         + todo +
         '<a href="" class="check-mark">'+
           '<span class="float-right fas fa-check"></span>'+
@@ -162,10 +155,10 @@ $(document).on('ready', function() {
    * and changing the html as needed*/
   function searchOnSuccess(data, textStatus, jqXHR){
     let jsonResult = JSON.parse(data);
-    let jsonArray = jsonResult.lists;
+    searchArray = jsonResult.lists;
 
-    for (var i = 0; i < jsonArray.length; i++) {
-      let name = jsonArray[i].name;
+    for (var i = 0; i < searchArray.length; i++) {
+      let name = searchArray[i].name;
       let newId = '#'+name;
       $(newId).hide();
     }
@@ -181,6 +174,12 @@ $(document).on('ready', function() {
 
   $('#searchFunction').submit(function(e) {
     e.preventDefault();
+
+    for (var i = 0; i < searchArray.length; i++) {
+      let name = searchArray[i].name;
+      let newId = '#'+name;
+      $(newId).show();
+    }
 
     let searchInput = $('#searchInput').val().trim();
     searchListAJAX(searchInput);
@@ -322,7 +321,8 @@ $(document).on('ready', function() {
   $(document).on('click', '.check-mark', function(e) {
     e.preventDefault();
     let parent_list = $(this).parents('.card').children('.card-header').text().replace(/\n/, '').trim();
-    let content = $(this).parents('.list-group-item').attr('id');
+    let content = $(this).parents('.list-group-item').text().trim();
+    console.log(content);
 
     $(this).parents('.list-group-item').remove();
 
