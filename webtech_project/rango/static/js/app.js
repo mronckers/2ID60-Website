@@ -202,6 +202,13 @@ $(document).on('ready', function() {
 
   /********************************* navbar **********************************/
 
+  $('#searchFunction').submit(function(e) {
+    e.preventDefault();
+    console.log("hello");
+    let searchInput = $('#searchInput').val().trim();
+    searchListAJAX(searchInput);
+  });
+
   //handles clicking the user button by opening the "userfunctionality"
   $(document).on('click', '#openUserFunctionality', function(e) {
     e.preventDefault();
