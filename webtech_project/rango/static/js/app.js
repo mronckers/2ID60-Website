@@ -39,7 +39,7 @@ $(document).on('ready', function() {
 
       $('.row').append(cardHTML);
 
-      $('.openBody').hide();
+      $('#'+list).children('.card-header').children('.openBody').hide();
       $('.form-group').hide();
     }
   };
